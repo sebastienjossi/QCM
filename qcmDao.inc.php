@@ -169,7 +169,7 @@ class QcmDao{
     }
 
     public static function GetQuestionsByIdQcm($idQcm){
-        $req = "SELECT id_question, question, id_qcm FROM question JOIN qcm WHERE id_Qcm = :id";
+        $req = "SELECT question.id_question, question.question, question.id_qcm FROM question JOIN qcm WHERE qcm.id_qcm = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':id', $idQcm);   
         $sql->execute();
