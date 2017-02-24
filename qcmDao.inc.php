@@ -126,8 +126,10 @@ class QcmDao{
     public static function GetQcmByIdCreator($idUser){
         $req = "SELECT qcm.* FROM qcm JOIN evaluation ON evaluation.id_qcm = qcm.id_qcm JOIN user ON user.id_user = evaluation.id_creator WHERE user.id_user = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
-        $sql->bindParam(':id', $idQcm);   
+        $sql->bindParam(':id', $idUser);   
         $sql->execute();
+
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public static function InsertQcm($idQcm, $name){
