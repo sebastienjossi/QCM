@@ -123,6 +123,13 @@ class QcmDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }  
 
+    public static function GetQcmByIdCreator($idUser){
+        $req = "SELECT qcm.* FROM qcm JOIN evaluation ON evaluation.id_qcm = qcm.id_qcm JOIN user ON user.id_user = evaluation.id_creator WHERE user.id_user = :id";
+        $sql = QcmPdo::GetPdo()->prepare($req); 
+        $sql->bindParam(':id', $idQcm);   
+        $sql->execute();
+    }
+
     public static function InsertQcm($idQcm, $name){
         $req = "INSERT INTO qcm(id_qcm, name, creation_date) VALUES (:id_qcm,:name, NOW())";
         $sql = QcmPdo::GetPdo()->prepare($req); 
