@@ -132,6 +132,8 @@ class QcmDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    
+
     public static function InsertQcm($idQcm, $name){
         $req = "INSERT INTO qcm(id_qcm, name, creation_date) VALUES (:id_qcm,:name, NOW())";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -151,7 +153,7 @@ class QcmDao{
     public static function GetQuestionById($idQuestion){
         $req = "SELECT id_question, question, id_qcm FROM question WHERE id_question = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
-        $sql->bindParam(':id', $idAnswer);   
+        $sql->bindParam(':id', $idQuestion);   
         $sql->execute();
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
