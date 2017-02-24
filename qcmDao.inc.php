@@ -127,8 +127,7 @@ class QcmDao{
         $req = "INSERT INTO qcm(id_qcm, name, creation_date) VALUES (:id_qcm,:name, NOW())";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':id_qcm', $idQcm);   
-        $sql->bindParam(':name', $name);  
-        $sql->bindParam(':creation_date', $creationDate);  
+        $sql->bindParam(':name', $name);
         $sql->execute();
     } 
 
@@ -161,7 +160,7 @@ class QcmDao{
     public static function GetQuestionsByIdQcm($idQcm){
         $req = "SELECT id_question, question, id_qcm FROM question JOIN qcm WHERE id_Qcm = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
-        $sql->bindParam(':id', $idQcmr);   
+        $sql->bindParam(':id', $idQcm);   
         $sql->execute();
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
