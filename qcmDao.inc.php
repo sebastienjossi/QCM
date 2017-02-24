@@ -220,7 +220,7 @@ class QcmDao{
     } 
 
     public static function GetAnswersByIdQuestion($idQuestion){
-        $req = "SELECT id_answer, answer, right_answer, id_question FROM answer WHEREid_question = :id";
+        $req = "SELECT id_answer, answer, right_answer, id_question FROM answer WHERE id_question = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':id', $idQuestion);   
         $sql->execute();
