@@ -132,7 +132,11 @@ class QcmDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    
+    public static function DeleteQcmByIdQcm($idQcm){
+        QcmPdo::GetPdo()::beginTransaction();
+        $req = "";
+        QcmPdo::GetPdo()::commit();
+    }
 
     public static function InsertQcm($idQcm, $name){
         $req = "INSERT INTO qcm(id_qcm, name, creation_date) VALUES (:id_qcm,:name, NOW())";
@@ -169,7 +173,7 @@ class QcmDao{
     }
 
     public static function GetQuestionsByIdQcm($idQcm){
-        $req = "SELECT question.id_question, question.question, question.id_qcm FROM question JOIN qcm WHERE qcm.id_qcm = :id";
+        $req = "SELECT question.id_question, question.question, question.id_qcm FROM question WHERE question.id_qcm = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':id', $idQcm);   
         $sql->execute();
