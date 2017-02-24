@@ -133,9 +133,20 @@ class QcmDao{
     }
 
     public static function DeleteQcmByIdQcm($idQcm){
-        QcmPdo::GetPdo()::beginTransaction();
-        $req = "";
-        QcmPdo::GetPdo()::commit();
+        QcmPdo::GetPdo()->beginTransaction();
+        $req = "DELETE user_has_answer FROM qcm JOIN question ON qcm.id_qcm = question.id_qcm JOIN answer ON question.id_question = answer.id_question JOIN user_has_answer ON answer.id_answer = user_has_answer.id_answer WHERE qcm.id_qcm = :id";
+        $sql->bindParam(':id', $idQcm);   
+        $sql->execute();
+
+        $req = "DELETE answer FROM qcm JOIN question ON qcm.id_qcm = question.id_qcm JOIN answer ON question.id_question = answer.id_question WHERE qcm.id_qcm = :id";
+        $sql->bindParam(':id', $idQcm);   
+        $sql->execute();
+
+        $req = "DELETE question FROM qcm JOIN question ON qcm.id_qcm = question.id_qcm WHERE qcm.id_qcm = :id";
+        $sql->bindParam(':id', $idQcm);   
+        $sql->execute();
+        
+        QcmPdo::GetPdo()->commit();
     }
 
     public static function InsertQcm($idQcm, $name){
