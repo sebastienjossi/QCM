@@ -120,7 +120,7 @@ class QcmDao{
         $sql->bindParam(':id', $idQcm);   
         $sql->execute();
 
-        return $sql->fetchAll(PDO::FETCH_ASSOC);
+        return $sql->fetchAll(PDO::FETCH_ASSOC)[0];
     }  
 
     public static function GetQcmByIdCreator($idUser){
