@@ -120,14 +120,33 @@ class QcmDao{
         $sql->bindParam(':id', $idQcm);   
         $sql->execute();
 
-        return $sql->fetchAll(PDO::FETCH_ASSOC);
+        return $sql->fetchAll(PDO::FETCH_ASSOC)[0];
     }  
 
     public static function GetQcmByIdCreator($idUser){
         $req = "SELECT qcm.* FROM qcm JOIN evaluation ON evaluation.id_qcm = qcm.id_qcm JOIN user ON user.id_user = evaluation.id_creator WHERE user.id_user = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
+        $sql->bindParam(':id', $idUser);   
+        $sql->execute();
+
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function DeleteQcmByIdQcm($idQcm){
+        QcmPdo::GetPdo()->beginTransaction();
+        $req = "DELETE user_has_answer FROM qcm JOIN question ON qcm.id_qcm = question.id_qcm JOIN answer ON question.id_question = answer.id_question JOIN user_has_answer ON answer.id_answer = user_has_answer.id_answer WHERE qcm.id_qcm = :id";
         $sql->bindParam(':id', $idQcm);   
         $sql->execute();
+
+        $req = "DELETE answer FROM qcm JOIN question ON qcm.id_qcm = question.id_qcm JOIN answer ON question.id_question = answer.id_question WHERE qcm.id_qcm = :id";
+        $sql->bindParam(':id', $idQcm);   
+        $sql->execute();
+
+        $req = "DELETE question FROM qcm JOIN question ON qcm.id_qcm = question.id_qcm WHERE qcm.id_qcm = :id";
+        $sql->bindParam(':id', $idQcm);   
+        $sql->execute();
+        
+        QcmPdo::GetPdo()->commit();
     }
 
     public static function InsertQcm($idQcm, $name){
@@ -149,7 +168,7 @@ class QcmDao{
     public static function GetQuestionById($idQuestion){
         $req = "SELECT id_question, question, id_qcm FROM question WHERE id_question = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
-        $sql->bindParam(':id', $idAnswer);   
+        $sql->bindParam(':id', $idQuestion);   
         $sql->execute();
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -165,7 +184,7 @@ class QcmDao{
     }
 
     public static function GetQuestionsByIdQcm($idQcm){
-        $req = "SELECT id_question, question, id_qcm FROM question JOIN qcm WHERE id_Qcm = :id";
+        $req = "SELECT question.id_question, question.question, question.id_qcm FROM question WHERE question.id_qcm = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':id', $idQcm);   
         $sql->execute();
@@ -201,7 +220,7 @@ class QcmDao{
     } 
 
     public static function GetAnswersByIdQuestion($idQuestion){
-        $req = "SELECT id_answer, answer, right_answer, id_question FROM answer WHEREid_question = :id";
+        $req = "SELECT id_answer, answer, right_answer, id_question FROM answer WHERE id_question = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':id', $idQuestion);   
         $sql->execute();
@@ -236,6 +255,14 @@ class EvaluationDao{
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     } 
+	
+	public static function GetEvaluationByIduser($idUser){
+        $req = "SELECT id_evaluation, name, access_code, id_qcm, id_creator FROM evaluation JOIN evaluation_has_user USING(id_evaluation) WHERE id_user = :idUser";
+        $sql = QcmPdo::GetPdo()->prepare($req); 
+        $sql->bindParam(':idUser', $idUser);   
+        $sql->execute();
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
+    } 
 
     public static function GetQcmByEvaluation($idEvaluation){
         $req = "SELECT qcm.id_qcm, qcm.name, qcm.creation_date FROM evaluation JOIN qcm ON qcm.id_qcm = evaluation.id_qcm WHERE evaluation.id_evaluation = :id";
@@ -261,8 +288,8 @@ class EvaluationDao{
         $req = 'INSERT INTO evaluation_has_user(id_user, id_evaluation) VALUES (1, (SELECT IdEvaluation FROM evaluation WHERE access_code = :code))';
     }
 
-    public static function EvaluationHasUser($idEvaluation, $idUser){
-        $req = "INSERT INTO user_has_answer(id_user, id_answer) VALUES (:id_evaluation, :id_user)";
+    public static function evaluationHasUser($idEvaluation, $idUser){
+        $req = "INSERT INTO evaluation_has_user(id_user, id_evaluation) VALUES (:id_user, :id_evaluation¨)";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':idEvaluation', $idEvaluation);  
         $sql->bindParam(':idUser', $idUser);    

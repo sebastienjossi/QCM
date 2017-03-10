@@ -7,3 +7,7 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+td {
+    text-align: left;
+}

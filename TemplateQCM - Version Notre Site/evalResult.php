@@ -40,52 +40,43 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Mes QCMs</h2>
+                    <h2>Résultats pour l'évaluation : ...</h2>
                     <hr class="star-primary">
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>Mes résultats aux évaluation</h2>
-                    <hr class="star-primary">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Evaluation</th>
-                                <th>Qcm</th>
-                                <th>Code d'accès</th>
-                                <th>Voir les résultats</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php 
-                                require_once("../qcmDao.inc.php");
-                                $idUser = 3; //Prendre de la session
-                                $evaluations = EvaluationDao::GetEvaluationByIdUser($idUser);
 
-                                for($i = 0; $i < count($evaluations); $i++)
-                                    $evaluations[$i]['qcmName'] = QcmDao::GetQcmById($evaluations[$i]['id_qcm'])['name'];
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>Bonne réponse</th>
+                            <th>Votre réponse</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                            require_once("../qcmDao.inc.php");
 
-                                $toDisplay = '';
-                                foreach($evaluations as $eval){
-                                    $toDisplay .= '<tr>';
-                                    $toDisplay .= '<td>' . $eval['name'] . '</td>';
-                                    $toDisplay .= '<td>' . $eval['qcmName'] . '</td>';
-                                    $toDisplay .= '<td>' . $eval['access_code'] . '</td>';
-                                    $toDisplay .= '<td><a href="evalResult.php?eval=' . $eval['id_evaluation'] . '&qcm=' . $eval['id_qcm'] . '" alt="Voir les résultats">Voir les résultats</a>';
-                                    $toDisplay .= '</tr>';
-                                }
+                            $idQcm = filter_input(INPUT_GET, 'qcm');
+                            $idEval = filter_input(INPUT_GET, 'eval');
 
-                                echo $toDisplay;
-                             ?>
-                        </tbody>
-                    </table>
-                </div>
+                            $toDisplay = '';
+                            foreach(qcmDao::GetQuestionsByIdQcm($idQcm) as $question){
+                                $toDisplay .= '<tr>';
+                                $toDisplay .= '<td>' . $question['question'] . '</td>';
+                                $toDisplay .= '<td>...</td>';
+                                $toDisplay .= '<td>...</td>';
+                                $toDisplay .= '</tr>';
+                            }
+
+                            echo $toDisplay;
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
 
-<?php include 'footer.html'; ?>
+    <?php include 'footer.html'; ?>
 
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
     <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
