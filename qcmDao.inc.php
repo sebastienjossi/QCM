@@ -21,6 +21,7 @@ class QcmPdo{
 }
 
 class UserDao{
+	//READ la table user  (retourne toutes les données de tout les utilisateurs)
     public static function GetUsers(){
         $req = "SELECT id_user, name, first_name, email, password, id_role FROM user";
         $sql = QcmPdo::GetPdo()->prepare($req);
@@ -29,6 +30,7 @@ class UserDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }    
 
+	//READ la table user pour un utilisateur à partir de son id (retourne toutes les données de cet utilisateur)
     public static function GetUserById($idUser){
         $req = "SELECT id_user, name, first_name, email, password, id_role FROM user WHERE id_user = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -38,6 +40,7 @@ class UserDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }  
 
+	//READ la table user pour un utilisateur en fonction d'un email donné (retourne toutes les données de cet utilisateur)
     public static function GetUserByEmail($emailUser){
         $req = "SELECT id_user, name, first_name, email, password, id_role FROM user WHERE email = :email";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -46,11 +49,10 @@ class UserDao{
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }  
-
-    public static function InsertUser($idUser, $name, $firstName, $email, $password, $idRole){
-        $req = "INSERT INTO user(id_user, name, first_name, email, password, id_role) VALUES (:id_user,:name,:first_name, :email,:password,:id_role)";
+	//INSERT un utilisateur dans la table user (avec un nom, un prénom, un email, un mot de passe, et un id de role)
+    public static function InsertUser($name, $firstName, $email, $password, $idRole){
+        $req = "INSERT INTO user(name, first_name, email, password, id_role) VALUES (:name,:first_name, :email,:password,:id_role)";
         $sql = QcmPdo::GetPdo()->prepare($req); 
-        $sql->bindParam(':id_user', $idUser);   
         $sql->bindParam(':name', $name);  
         $sql->bindParam(':firstName', $firstName);  
         $sql->bindParam(':email', $email);  
@@ -58,7 +60,7 @@ class UserDao{
         $sql->bindParam(':idRole', $idRole);  
         $sql->execute();
     } 
-
+	//READ de la table Role (retourne tout les roles)
     public static function GetRoles(){
         $req = "SELECT id_role, name FROM role";
         $sql = QcmPdo::GetPdo()->prepare($req);
@@ -66,7 +68,7 @@ class UserDao{
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }    
-
+	//READ de la table role en fonction d'un id donné (retourne le nom du role)
     public static function GetRoleById($idRole){
         $req = "SELECT id_role, name FROM role WHERE id_role = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -75,7 +77,7 @@ class UserDao{
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     } 
-
+	//READ de la table qcm en fonction d'un utilisateur (retourne les données de la table qcm)
     public static function GetQcmByIdUser($idUser){
         $req = "SELECT qcm.id_qcm, qcm.name, qcm.creation_date FROM user JOIN user_has_answer ON user_has_answer.id_user = user.id_user JOIN answer ON answer.id_answer = user_has_answer.id_answer JOIN question ON question.id_question = answer.id_question JOIN qcm ON qcm.id_qcm = question.id_qcm WHERE user.id_user = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -84,8 +86,8 @@ class UserDao{
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }  
-
-    public static function GetAnswerById($idUser, $idQcm, $idQuestion){
+	//READ de la table answer en fonction d'un utilisateur et d'une question
+    public static function GetAnswerFromUserById($idUser, $idQcm, $idQuestion){
         $req = "SELECT answer.id_answer, answer.answer, answer.right_answer, answer.id_question FROM user JOIN user_has_answer ON user_has_answer.id_user = user.id_user JOIN answer ON answer.id_answer = user_has_answer.id_answer JOIN question ON question.id_question = answer.id_question JOIN qcm ON qcm.id_qcm = question.id_qcm WHERE user.id_user = :idUser AND qcm.id_qcm = :idQcm AND question.id_question = :idQuestion";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':idUser', $idUser);   
@@ -101,14 +103,6 @@ class UserDao{
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':idUser', $idUser);   
         $sql->bindParam(':idAnswer', $idAnswer);   
-        $sql->execute();
-    }
-	
-	public static function userHasAnswer($idAnswer, $idUser){
-        $req = "INSERT INTO user_has_answer(id_user, id_answer) VALUES (:id_user, :id_answer)";
-        $sql = QcmPdo::GetPdo()->prepare($req); 
-        $sql->bindParam(':idAnswer', $idAnswer);  
-        $sql->bindParam(':idUser', $idUser);    
         $sql->execute();
     }
 }
@@ -192,7 +186,7 @@ class QcmDao{
     }
 
     public static function GetQuestionsByIdQcm($idQcm){
-        $req = "SELECT question.id_question, question.question, question.id_qcm FROM question WHERE question.id_qcm = :id";
+        $req = "SELECT question.id_question, question.question, question.id_qcm FROM question WHERE question.id_qcm = :id AND question.id_qcm = qcm.id_qcm";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':id', $idQcm);   
         $sql->execute();
