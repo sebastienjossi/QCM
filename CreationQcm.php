@@ -32,6 +32,7 @@
                 <br>
                 <input class="btn btn-default" type="submit" value="Créer le QCM" onclick="insert()">
             </div>
+
         </section>
         <?php include 'footer.html'; ?>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -51,11 +52,11 @@
                         $("#formulaireQcm").find(("#btnRemoveQuestion" + btnRemoveShow + "")).show();
                     }
 
-                    function addAnswer(numFormRep) {
-                        var nbAnswer = $("#formulaireReponse" + numFormRep + "").find($("input")).length - 1;
-                        $("#formulaireReponse" + numFormRep + "").append('<div id="answer' + nbAnswer + '" class="createQcm-answer"><label>Réponse ' + nbAnswer + ' :</label><input class="form-control" type="text" ><div id="btnRemove' + nbAnswer + '"><a onclick="removeAnswer(' + nbAnswer + ', ' + numFormRep + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div></div>');
+                    function addAnswer(numQuestion) {
+                        var nbAnswer = $("#formulaireReponse" + numQuestion + "").find($("label")).length;
+                        $("#formulaireReponse" + numQuestion + "").append('<div id="answer' + nbAnswer + '" class="createQcm-answer"><label>Réponse ' + nbAnswer + ' :</label><input class="form-control" type="text" id="textAnswer' + numQuestion + '' + nbAnswer + '"><input type="radio" value="juste" name="rightAnswer' + numQuestion + '' + nbAnswer + '" id="rightAnswer' + numQuestion + '' + nbAnswer + '">Juste<br><input type="radio" value="faux" name="rightAnswer' + numQuestion + '' + nbAnswer + '" id="rightAnswer' + numQuestion + '' + nbAnswer + '" checked>Faux<div id="btnRemove' + nbAnswer + '"><a onclick="removeAnswer(' + nbAnswer + ', ' + numQuestion + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div></div>');
                         var btnRemoveHide = nbAnswer - 1;
-                        $("#formulaireReponse" + numFormRep + "").find(("#btnRemove" + btnRemoveHide + "")).hide();
+                        $("#formulaireReponse" + numQuestion + "").find(("#btnRemove" + btnRemoveHide + "")).hide();
                     }
 
                     function removeAnswer(numAnswer, numFormRep) {
@@ -66,14 +67,22 @@
 
                     function insert() {
                         var nameQcm = $("#nameQcm").val();
-                        var questions = [];
+                        var questions = [];                       
+                        var answers = [];
                         for (i = 1; i <= nbQuestion; i++) {
                             questions.push($("#question" + i + "").val());
-                        }
+                            var nbAnswerInQuestion = $("#formulaireReponse" + i + "").find($("label")).length - 1;
+                            for (x = 1; x <= nbAnswerInQuestion; x++) {
+                                var texteReponse = ($("#textAnswer" + i + "" + x + "").val());
+                                var RightAnswer = $("#rightAnswer" + i + "" + x + ":checked").val();
+                                var answer = {numQuestion:i, rightAnswer:RightAnswer, textAnswer:texteReponse};
+                                answers.push(answer);
+                            }
+                        }  
                         $.ajax({
                             method: 'POST',
                             url: 'controleur.php',
-                            data: {'nameQcm': nameQcm, 'questions': questions},
+                            data: {'nameQcm': nameQcm, 'questions': questions, 'answers': answers},
                             dataType: 'json',
                             success: function (data) {
                                 if (data.status === "success") {
