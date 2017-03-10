@@ -103,6 +103,14 @@ class UserDao{
         $sql->bindParam(':idAnswer', $idAnswer);   
         $sql->execute();
     }
+	
+	public static function userHasAnswer($idAnswer, $idUser){
+        $req = "INSERT INTO user_has_answer(id_user, id_answer) VALUES (:id_user, :id_answer)";
+        $sql = QcmPdo::GetPdo()->prepare($req); 
+        $sql->bindParam(':idAnswer', $idAnswer);  
+        $sql->bindParam(':idUser', $idUser);    
+        $sql->execute();
+    }
 }
 
 class QcmDao{
@@ -280,8 +288,8 @@ class EvaluationDao{
         $req = 'INSERT INTO evaluation_has_user(id_user, id_evaluation) VALUES (1, (SELECT IdEvaluation FROM evaluation WHERE access_code = :code))';
     }
 
-    public static function EvaluationHasUser($idEvaluation, $idUser){
-        $req = "INSERT INTO user_has_answer(id_user, id_answer) VALUES (:id_evaluation, :id_user)";
+    public static function evaluationHasUser($idEvaluation, $idUser){
+        $req = "INSERT INTO evaluation_has_user(id_user, id_evaluation) VALUES (:id_user, :id_evaluation¨)";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':idEvaluation', $idEvaluation);  
         $sql->bindParam(':idUser', $idUser);    
