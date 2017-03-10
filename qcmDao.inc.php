@@ -263,6 +263,15 @@ class EvaluationDao{
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     } 
+	
+	public static function GetEvaluationByIduser($idUser){
+        $req = "SELECT id_evaluation, name, access_code, id_qcm, id_creator FROM evaluation JOIN evaluation_has_user USING(id_evaluation) WHERE id_user = :idUser";
+        $sql = QcmPdo::GetPdo()->prepare($req); 
+        $sql->bindParam(':idUser', $idUser);   
+        $sql->execute();
+
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
+    } 
 
     public static function GetQcmByEvaluation($idEvaluation){
         $req = "SELECT qcm.id_qcm, qcm.name, qcm.creation_date FROM evaluation JOIN qcm ON qcm.id_qcm = evaluation.id_qcm WHERE evaluation.id_evaluation = :id";
