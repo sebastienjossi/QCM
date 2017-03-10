@@ -137,7 +137,8 @@ class QcmDao{
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
-
+	
+	//Supprime le qcm correspondant à l'id donné (gère également la suppression des questions du qcm et des réponses des questions)
     public static function DeleteQcmByIdQcm($idQcm){
         QcmPdo::GetPdo()->beginTransaction();
         $req = "DELETE user_has_answer FROM qcm JOIN question ON qcm.id_qcm = question.id_qcm JOIN answer ON question.id_question = answer.id_question JOIN user_has_answer ON answer.id_answer = user_has_answer.id_answer WHERE qcm.id_qcm = :id";
@@ -155,6 +156,7 @@ class QcmDao{
         QcmPdo::GetPdo()->commit();
     }
 
+	//Insert un qcm qui a un nom dans la table qcm
     public static function InsertQcm($idQcm, $name){
         $req = "INSERT INTO qcm(id_qcm, name, creation_date) VALUES (:id_qcm,:name, NOW())";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -163,6 +165,7 @@ class QcmDao{
         $sql->execute();
     } 
 
+	//Read de la table question (retourne l'id, la question et l'id du qcm contenant la question)
     public static function GetQuestions(){
         $req = "SELECT id_question, question, id_qcm FROM question";
         $sql = QcmPdo::GetPdo()->prepare($req);
@@ -171,6 +174,7 @@ class QcmDao{
         return $sql->fetchALL(PDO::FETCH_ASSOC);
     }
 
+	//Read de la table question en fonction d'un id de question (retourne la question correspondant à l'id donné)
     public static function GetQuestionById($idQuestion){
         $req = "SELECT id_question, question, id_qcm FROM question WHERE id_question = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -180,15 +184,16 @@ class QcmDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }  
 
-    public static function InsertQuestion($idQuestion, $question, $idQcm){
-        $req = "INSERT INTO question(id_question, question, id_qcm) VALUES (:id_question, :question, :id_qcm)";
-        $sql = QcmPdo::GetPdo()->prepare($req); 
-        $sql->bindParam(':id_question', $idQuestion);   
+	//Insert d'une question avec la question et le qcm la contenant
+    public static function InsertQuestion($question, $idQcm){
+        $req = "INSERT INTO question(question, id_qcm) VALUES (:question, :id_qcm)";
+        $sql = QcmPdo::GetPdo()->prepare($req);  
         $sql->bindParam(':question', $question);  
         $sql->bindParam(':id_qcm', $idQcm); 
         $sql->execute();
     }
 
+	//Read de question en fonction de l'id du qcm la contenant (retourne l'id , la question, l'id du qcm
     public static function GetQuestionsByIdQcm($idQcm){
         $req = "SELECT question.id_question, question.question, question.id_qcm FROM question WHERE question.id_qcm = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -198,6 +203,7 @@ class QcmDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
+	//Read de la table answers (retourne l'id, la réponse, le booléen indiquant si la réponse est juste ou fausse, l'id de la question correspondante)
     public static function GetAnswers(){
         $req = "SELECT id_answer, answer, right_answer, id_question FROM answer";
         $sql = QcmPdo::GetPdo()->prepare($req);
@@ -206,6 +212,7 @@ class QcmDao{
         return $sql->fetchALL(PDO::FETCH_ASSOC);
     }
 
+	//Read de la table réponse en fonction d'un Id (retourne l'id, la réponse, le booéen indiquant si la réponse est juste ou fausse et l'id de la question correspondante)
     public static function GetAnswerById($idAnswer){
         $req = "SELECT id_answer, answer, right_answer, id_question FROM answer WHERE id_answer = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -215,16 +222,17 @@ class QcmDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }  
 
-    public static function InsertAnswer($idAnswer, $answer, $right_answer, $idQuestion){
-        $req = "INSERT INTO answer(id_answer, answer, right_answer, id_question) VALUES (:id_answer,:answer,:right_answer,:id_question)";
-        $sql = QcmPdo::GetPdo()->prepare($req); 
-        $sql->bindParam(':id_answer', $idAnswer);   
+	//Insert une réponse
+    public static function InsertAnswer($answer, $right_answer, $idQuestion){
+        $req = "INSERT INTO answer(answer, right_answer, id_question) VALUES (:answer,:right_answer,:id_question)";
+        $sql = QcmPdo::GetPdo()->prepare($req);   
         $sql->bindParam(':answer', $answer);  
         $sql->bindParam(':right_answer', $right_answer);  
         $sql->bindParam(':id_question', $idQuestion);  
         $sql->execute();
     } 
 
+	//Read une réponse en fonction de l'id de la question correspondante (retourne l'id, la réponse, le booléen et l'id de la question.
     public static function GetAnswersByIdQuestion($idQuestion){
         $req = "SELECT id_answer, answer, right_answer, id_question FROM answer WHERE id_question = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -236,6 +244,7 @@ class QcmDao{
 }
 
 class EvaluationDao{
+	//Read de la table evaluation (retourne l'id, le nom, le code d'accès, l'id du qcm correspondant et l'id du créateur (de chaque évaluation)
     public static function GetEvaluations(){
         $req = "SELECT id_evaluation, name, access_code, id_qcm, id_creator FROM evaluation";
         $sql = QcmPdo::GetPdo()->prepare($req);
@@ -244,6 +253,7 @@ class EvaluationDao{
         return $sql->fetchALL(PDO::FETCH_ASSOC);
     }
 
+	//Read de la table evaluation en fonction d'un id (retourne toutes les données d'une évaluation correspondant à l'id)
     public static function GetEvaluationById($idEvaluation){
         $req = "SELECT id_evaluation, name, access_code, id_qcm, id_creator FROM evaluation WHERE id_evaluation = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -253,6 +263,7 @@ class EvaluationDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }  
 
+	//Read de la table evaluation en fonction du code d'accès (retourne toutes les données de l'évaluation correspondant au code d'accès)
     public static function GetEvaluationByAccessCode($accessCode){
         $req = "SELECT id_evaluation, name, access_code, id_qcm, id_creator FROM evaluation WHERE access_code = :code";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -262,6 +273,7 @@ class EvaluationDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     } 
 	
+	//Read de la table evaluation en fonction de l'id d'un utilisateur (retourne toutes les données de l'évaluation correspondant à l'id utilisateur)
 	public static function GetEvaluationByIduser($idUser){
         $req = "SELECT id_evaluation, name, access_code, id_qcm, id_creator FROM evaluation JOIN evaluation_has_user USING(id_evaluation) WHERE id_user = :idUser";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -270,6 +282,7 @@ class EvaluationDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     } 
 
+	//Read de la table qcm en fonction d'une evaluation (retourne le qcm correspondant à l'évaluation)
     public static function GetQcmByEvaluation($idEvaluation){
         $req = "SELECT qcm.id_qcm, qcm.name, qcm.creation_date FROM evaluation JOIN qcm ON qcm.id_qcm = evaluation.id_qcm WHERE evaluation.id_evaluation = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -279,10 +292,10 @@ class EvaluationDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }  
 
-    public static function InsertEvaluation($idEvaluation, $name, $accessCode, $idQcm, $idCreator){
-        $req = "INSERT INTO evaluation(id_evaluation, name, access_code, id_qcm, id_creator) VALUES (:id_evaluation,:name,:access_code,:id_qcm,:id_creator)";
-        $sql = QcmPdo::GetPdo()->prepare($req); 
-        $sql->bindParam(':id_evaluation', $idEvaluation);   
+	//Insert d'une evaluation avec un nom, un code d'accès, un id de qcm et un id de créateur
+    public static function InsertEvaluation($name, $accessCode, $idQcm, $idCreator){
+        $req = "INSERT INTO evaluation(name, access_code, id_qcm, id_creator) VALUES (:name,:access_code,:id_qcm,:id_creator)";
+        $sql = QcmPdo::GetPdo()->prepare($req);  
         $sql->bindParam(':name', $name);  
         $sql->bindParam(':access_code', $accessCode);  
         $sql->bindParam(':id_qcm', $idQcm);  
@@ -290,10 +303,14 @@ class EvaluationDao{
         $sql->execute();
     } 
 
+	//Insert un utilisateur dans une evaluation via son code d'accès !!! A VERIFIER !!!
     public static function AddUserInEvalutionByCode($idUser, $code){
-        $req = 'INSERT INTO evaluation_has_user(id_user, id_evaluation) VALUES (1, (SELECT IdEvaluation FROM evaluation WHERE access_code = :code))';
+        $req = 'INSERT INTO evaluation_has_user(id_user, id_evaluation) VALUES (:idUser, (SELECT IdEvaluation FROM evaluation WHERE access_code = :code))';
+		$sql->bindParam(':idUser', $idUser);
+		$sql->bindParam(':code', $code);  		 
     }
 
+	//Insert dans la table de liaison entre les évaluations et les utilisateurs
     public static function evaluationHasUser($idEvaluation, $idUser){
         $req = "INSERT INTO evaluation_has_user(id_user, id_evaluation) VALUES (:id_user, :id_evaluation¨)";
         $sql = QcmPdo::GetPdo()->prepare($req); 
