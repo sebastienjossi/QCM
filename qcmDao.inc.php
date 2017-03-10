@@ -232,9 +232,19 @@ class QcmDao{
         $sql->execute();
     } 
 
-	//Read une réponse en fonction de l'id de la question correspondante (retourne l'id, la réponse, le booléen et l'id de la question.
+	//Read une réponse en fonction de l'id de la question correspondante (retourne l'id, la réponse, le booléen et l'id de la question)
     public static function GetAnswersByIdQuestion($idQuestion){
         $req = "SELECT id_answer, answer, right_answer, id_question FROM answer WHERE id_question = :id";
+        $sql = QcmPdo::GetPdo()->prepare($req); 
+        $sql->bindParam(':id', $idQuestion);   
+        $sql->execute();
+
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+	
+	//Read la bonne réponse en fonction de l'id de la question correspondante (retourne l'id, la réponse, le booléen et l'id de la question)
+	 public static function GetAnswersByIdQuestion($idQuestion){
+        $req = "SELECT id_answer, answer, right_answer, id_question FROM answer WHERE id_question = :id AND right_answer = 1";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':id', $idQuestion);   
         $sql->execute();
