@@ -86,7 +86,7 @@ class UserDao{
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }  
-	//READ de la table answer en fonction d'un utilisateur et d'une question
+	//READ de la table answer en fonction en fonction d'un id d'utilisateur, d'un id de qcm et d'un id de question (retourne la réponse d'un utilisateur à une question d'un qcm)
     public static function GetAnswerFromUserById($idUser, $idQcm, $idQuestion){
         $req = "SELECT answer.id_answer, answer.answer, answer.right_answer, answer.id_question FROM user JOIN user_has_answer ON user_has_answer.id_user = user.id_user JOIN answer ON answer.id_answer = user_has_answer.id_answer JOIN question ON question.id_question = answer.id_question JOIN qcm ON qcm.id_qcm = question.id_qcm WHERE user.id_user = :idUser AND qcm.id_qcm = :idQcm AND question.id_question = :idQuestion";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -98,6 +98,7 @@ class UserDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     } 
 
+	//INSERT une liaison dans la table user_has_answer
     public static function UserHasAnswer($idUser, $idAnswer){
         $req = "INSERT INTO user_has_answer(id_user, id_answer) VALUES (:id_user, :id_answer)";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -108,6 +109,7 @@ class UserDao{
 }
 
 class QcmDao{
+	//READ de la table qcm (retourne l'id, le nom, et la date de création)
     public static function GetQcms(){
         $req = "SELECT id_qcm, name, creation_date FROM qcm";
         $sql = QcmPdo::GetPdo()->prepare($req);
@@ -116,6 +118,7 @@ class QcmDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }    
 
+	//Read de la table qcm en fonction de l'id d'un qcm (retourne l'id le nom et la date de création d'un qcm)
     public static function GetQcmById($idQcm){
         $req = "SELECT id_qcm, name, creation_date FROM qcm WHERE id_qcm = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -125,6 +128,7 @@ class QcmDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC)[0];
     }  
 
+	//Read de la table qcm en fonction de l'id du créateur (retourne tout les qcms créés par un même utilisateur)
     public static function GetQcmByIdCreator($idUser){
         $req = "SELECT qcm.* FROM qcm JOIN evaluation ON evaluation.id_qcm = qcm.id_qcm JOIN user ON user.id_user = evaluation.id_creator WHERE user.id_user = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
@@ -186,7 +190,7 @@ class QcmDao{
     }
 
     public static function GetQuestionsByIdQcm($idQcm){
-        $req = "SELECT question.id_question, question.question, question.id_qcm FROM question WHERE question.id_qcm = :id AND question.id_qcm = qcm.id_qcm";
+        $req = "SELECT question.id_question, question.question, question.id_qcm FROM question WHERE question.id_qcm = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':id', $idQcm);   
         $sql->execute();
