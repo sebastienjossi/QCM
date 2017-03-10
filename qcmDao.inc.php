@@ -269,7 +269,6 @@ class EvaluationDao{
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':idUser', $idUser);   
         $sql->execute();
-
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     } 
 
