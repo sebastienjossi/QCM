@@ -25,43 +25,69 @@
     <body>
         <?php include 'header.html'; ?>
         <section id="QCM">
-            <div id="formulaireQuestion" class="createQcm-answer">
+            <div id="formulaireQcm" class="createQcm-qcm">
                 <label>Nom QCM :</label>
-                <input class="form-control" type="text" name="nameQcm"><br>
+                <input class="form-control" type="text" name="nameQcm" id="nameQcm"><br>
                 <input class="btn btn-default" type="submit" value="Ajouter une question" onclick="addQuestion()">
                 <br>
+                <input class="btn btn-default" type="submit" value="Créer le QCM" onclick="insert()">
             </div>
-            
-<!--            <div id="formulaireReponse" class="createQcm-answer">
-                <label>Question :</label>
-                <input class="form-control" type="text" name="nameQcm"><br>
-                <input class="btn btn-default" type="submit" value="Ajouter une réponse" onclick="addAnswer()">
-                <br>
-            </div>-->
         </section>
         <?php include 'footer.html'; ?>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>
-                    function addQuestion(){
-                        var nbQuestion = $("#QCM").find($("label")).length;
-                        $("#QCM").append('<div id="formulaireReponse'+nbQuestion+'" class="createQcm-answer"><label>Question '+nbQuestion+' :</label><input class="form-control" type="text" name="nameQcm"><input class="btn btn-default" type="submit" value="Ajouter une réponse" onclick="addAnswer('+nbQuestion+')"><br></div>');
+                    var nbQuestion = 0;
+                    function addQuestion() {
+                        nbQuestion = nbQuestion + 1;
+                        $("#formulaireQcm").append('<div id="formulaireReponse' + nbQuestion + '" class="createQcm-question"><label>Question ' + nbQuestion + ' :</label><input class="form-control" type="text" name="question" id="question' + nbQuestion + '"><input class="btn btn-default" type="submit" value="Ajouter une réponse" onclick="addAnswer(' + nbQuestion + ')"><br><div id="btnRemoveQuestion' + nbQuestion + '"><a onclick="removeQuestion(' + nbQuestion + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div></div>');
+                        var numBtnHide = nbQuestion - 1;
+                        $("#formulaireQcm").find(("#btnRemoveQuestion" + numBtnHide + "")).hide();
                     }
-                    
-                    function addAnswer(numFormRep) {
-                        var nbAnswer = $("#formulaireReponse"+numFormRep+"").find($("input")).length-1;
-                        $("#formulaireReponse"+numFormRep+"").append('<div id="answer' + nbAnswer + '"><label>Réponse ' + nbAnswer + ' :</label><input class="form-control" type="text" ><div id="btnRemove' + nbAnswer + '"><a onclick="removeAnswer(' + nbAnswer + ', '+numFormRep+')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div></div>');
-                        var btnRemoveHide = nbAnswer-1;
-                        $("#formulaireReponse"+numFormRep+"").find(("#btnRemove" + btnRemoveHide + "")).hide();
-                    }
-                    
-                    function removeAnswer(numAnswer, numFormRep){
-                       $("#formulaireReponse"+numFormRep+"").find(("#answer" + numAnswer + "")).remove();
-                       //$("#answer" + numAnswer + "").remove();
-                       var btnRemoveShow = numAnswer-1;
-                       $("#formulaireReponse"+numFormRep+"").find(("#btnRemove" + btnRemoveShow + "")).show();
-                    }
-                    
 
+                    function removeQuestion(numQuestion) {
+                        nbQuestion = nbQuestion - 1;
+                        $("#formulaireQcm").find(("#formulaireReponse" + numQuestion + "")).remove();
+                        var btnRemoveShow = numQuestion - 1;
+                        $("#formulaireQcm").find(("#btnRemoveQuestion" + btnRemoveShow + "")).show();
+                    }
+
+                    function addAnswer(numFormRep) {
+                        var nbAnswer = $("#formulaireReponse" + numFormRep + "").find($("input")).length - 1;
+                        $("#formulaireReponse" + numFormRep + "").append('<div id="answer' + nbAnswer + '" class="createQcm-answer"><label>Réponse ' + nbAnswer + ' :</label><input class="form-control" type="text" ><div id="btnRemove' + nbAnswer + '"><a onclick="removeAnswer(' + nbAnswer + ', ' + numFormRep + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div></div>');
+                        var btnRemoveHide = nbAnswer - 1;
+                        $("#formulaireReponse" + numFormRep + "").find(("#btnRemove" + btnRemoveHide + "")).hide();
+                    }
+
+                    function removeAnswer(numAnswer, numFormRep) {
+                        $("#formulaireReponse" + numFormRep + "").find(("#answer" + numAnswer + "")).remove();
+                        var btnRemoveShow = numAnswer - 1;
+                        $("#formulaireReponse" + numFormRep + "").find(("#btnRemove" + btnRemoveShow + "")).show();
+                    }
+
+                    function insert() {
+                        var nameQcm = $("#nameQcm").val();
+                        var questions = [];
+                        for (i = 1; i <= nbQuestion; i++) {
+                            questions.push($("#question" + i + "").val());
+                        }
+                        $.ajax({
+                            method: 'POST',
+                            url: 'controleur.php',
+                            data: {'nameQcm': nameQcm, 'questions': questions},
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.status === "success") {
+                                    window.location.href = "http://stackoverflow.com";
+                                }
+                                if (data.status === "error") {
+                                    window.location.href = "http://ok.com";
+                                }
+                            },
+                            error: function (jqXHR) {
+                                $('#userSection').html(jqXHR.toString());
+                            }
+                        });
+                    }
         </script>
     </body>
 </html>
