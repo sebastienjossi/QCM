@@ -160,13 +160,12 @@ class QcmDao{
     }
 
 	//Insert un qcm qui a un nom dans la table qcm
-    public static function InsertQcm($idQcm, $name){
-        $req = "INSERT INTO qcm(id_qcm, name, creation_date) VALUES (:id_qcm,:name, NOW())";
+    public static function InsertQcm($name){
+        $req = "INSERT INTO qcm(name, creation_date) VALUES (:name, NOW())";
         $sql = QcmPdo::GetPdo()->prepare($req); 
-        $sql->bindParam(':id_qcm', $idQcm);   
-        $sql->bindParam(':name', $name);
+        $sql->bindParam(':name', $name);  
         $sql->execute();
-    } 
+    }
 
 	//Read de la table question (retourne l'id, la question et l'id du qcm contenant la question)
     public static function GetQuestions(){
@@ -188,11 +187,11 @@ class QcmDao{
     }  
 
 	//Insert d'une question avec la question et le qcm la contenant
-    public static function InsertQuestion($question, $idQcm){
+    public static function InsertQuestion($question, $lastIDQcm){
         $req = "INSERT INTO question(question, id_qcm) VALUES (:question, :id_qcm)";
-        $sql = QcmPdo::GetPdo()->prepare($req);  
+        $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':question', $question);  
-        $sql->bindParam(':id_qcm', $idQcm); 
+        $sql->bindParam(':id_qcm', $lastIDQcm); 
         $sql->execute();
     }
 
@@ -228,12 +227,12 @@ class QcmDao{
 	//Insert une réponse
     public static function InsertAnswer($answer, $right_answer, $idQuestion){
         $req = "INSERT INTO answer(answer, right_answer, id_question) VALUES (:answer,:right_answer,:id_question)";
-        $sql = QcmPdo::GetPdo()->prepare($req);   
+        $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':answer', $answer);  
         $sql->bindParam(':right_answer', $right_answer);  
         $sql->bindParam(':id_question', $idQuestion);  
         $sql->execute();
-    } 
+    }
 
 	//Read une réponse en fonction de l'id de la question correspondante (retourne l'id, la réponse, le booléen et l'id de la question)
     public static function GetAnswersByIdQuestion($idQuestion){
