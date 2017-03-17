@@ -1,0 +1,41 @@
+/* Loïc Sirey */ 
+
+html, body, #qcmPage {
+    height: 100%;
+}
+
+#qcmPage {
+    background-color: #18BC9C;
+    text-align: center;
+}
+
+.qcm {
+    margin-top: 10%;
+}
+
+.qcm button {
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.qcm button, .qcm p {
+    display: block;
+}
+
+.btnPagination {
+    display: inline-block !important;
+}
+
+.btnPagination:first-child {
+    margin-right: 10px;
+}
+
+.qcm p {
+    color: white;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
