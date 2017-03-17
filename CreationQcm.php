@@ -1,5 +1,16 @@
+
 <!DOCTYPE html>
 <html>
+    <!--/*
+Dévleppeur : 
+Loick Pipolo, Ivan Trifunovic
+Description :
+Interface de création de qcm qui envoie les données à controleur.php en ajax
+Date :
+17.03.2017
+Version :
+1.0
+*/-->
     <head>
         <meta charset="UTF-8">
         <title>QCM</title>
@@ -66,36 +77,58 @@
                     }
 
                     function insert() {
+                        var champsOk = true;
                         var nameQcm = $("#nameQcm").val();
-                        var questions = [];                       
+                        var questions = [];
                         var answers = [];
                         for (i = 1; i <= nbQuestion; i++) {
-                            questions.push($("#question" + i + "").val());
+                            var question = $("#question" + i + "").val()
+                            questions.push(question);
+                            if (question === "") {
+                                champsOk = false;
+                            }
                             var nbAnswerInQuestion = $("#formulaireReponse" + i + "").find($("label")).length - 1;
                             for (x = 1; x <= nbAnswerInQuestion; x++) {
                                 var texteReponse = ($("#textAnswer" + i + "" + x + "").val());
+                                if (texteReponse === "") {
+                                    champsOk = false;
+                                }
                                 var RightAnswer = $("#rightAnswer" + i + "" + x + ":checked").val();
-                                var answer = {numQuestion:i, rightAnswer:RightAnswer, textAnswer:texteReponse};
+                                var RightAnswerBool = 0;
+                                if (RightAnswer === "juste") {
+                                    RightAnswerBool = 1;
+                                }
+                                var answer = {numQuestion: i, RightAnswerBool: RightAnswerBool, textAnswer: texteReponse};
                                 answers.push(answer);
                             }
-                        }  
-                        $.ajax({
-                            method: 'POST',
-                            url: 'controleur.php',
-                            data: {'nameQcm': nameQcm, 'questions': questions, 'answers': answers},
-                            dataType: 'json',
-                            success: function (data) {
-                                if (data.status === "success") {
-                                    window.location.href = "http://stackoverflow.com";
+                        }
+                        if (champsOk === true) {
+                            $.ajax({
+                                method: 'POST',
+                                url: 'controleur.php',
+                                data: {'nameQcm': nameQcm, 'questions': questions, 'answers': answers},
+                                dataType: 'json',
+                                success: function (data) {
+                                    if (data.status === "success") {
+                                        window.location.href = "CreationQcm.php";
+                                    }
+                                    if (data.status === "error") {
+                                        error();
+                                    }
+                                },
+                                error: function () {
+                                    error();
                                 }
-                                if (data.status === "error") {
-                                    window.location.href = "http://ok.com";
-                                }
-                            },
-                            error: function (jqXHR) {
-                                $('#userSection').html(jqXHR.toString());
-                            }
-                        });
+                            });
+                        } else {
+                            error();
+                        }
+                    }
+
+
+
+                    function error() {
+                        alert("Entre tous les champs abruti");
                     }
         </script>
     </body>
