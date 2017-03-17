@@ -1,9 +1,5 @@
 /* Loïc Sirey */ 
 
-html, body, #qcmPage {
-    height: 100%;
-}
-
 #qcmPage {
     background-color: #18BC9C;
     text-align: center;
