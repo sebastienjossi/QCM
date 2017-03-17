@@ -11,3 +11,12 @@ footer {
 td {
     text-align: left;
 }
+
+#portfolio {
+    margin-top: 30px;
+}
+
+.table {
+    margin-top: 50px;
+    margin-bottom: 40px;
+}

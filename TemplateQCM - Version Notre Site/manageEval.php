@@ -40,59 +40,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <?php
-                        $idEval = filter_input(INPUT_GET, 'eval', FILTER_VALIDATE_INT);
-                        $idQcm = filter_input(INPUT_GET, 'qcm', FILTER_VALIDATE_INT);
-
-                        if($idQcm != false && $idEval != false){
-                            require_once("../qcmDao.inc.php");
-                            $evalArray = EvaluationDao::GetEvaluationById($idEval);
-                        } else {
-                            header("Location: index.php");
-                        }
-                    ?>
-                    <h2>Résultats pour l'évaluation : <?php echo $evalArray[0]["name"]; ?></h2>
+                    <h2>Evaluations pour ce qcm</h2>
                     <hr class="star-primary">
+                    
                 </div>
-
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Question</th>
-                            <th>Bonne réponse</th>
-                            <th>Votre réponse</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php 
-                            $idUser = 3; /*quand ce sera fait, il faudra utiliser l'utilisateur en session */
-
-                            $questionArray = qcmDao::GetQuestionsByIdQcm($idQcm);
-                            $rightAnswerArray;
-                            $userAnswerArray;
-                            foreach($questionArray as $question){
-                                $rightAnswerArray[] = qcmDao::GetRightAnswerByIdQuestion($question["id_question"]);
-                                $userAnswerArray[] = userDao::GetAnswerFromUserById($idUser, $idQcm, $question["id_question"]);
-                            }
-
-                            $toDisplay = '';
-                            for($i = 0; $i < count($questionArray); $i++){
-                                $toDisplay .= '<tr>';
-                                $toDisplay .= '<td>' . $questionArray[$i]['question'] . '</td>';
-                                $toDisplay .= '<td>' . $rightAnswerArray[$i][0]['answer'] . '</td>';
-                                $toDisplay .= '<td>' . $userAnswerArray[$i][0]['answer'] . '</td>';
-                                $toDisplay .= '</tr>';
-                            }
-
-                            echo $toDisplay;
-                        ?>
-                    </tbody>
-                </table>
             </div>
         </div>
     </section>
 
-    <?php include 'footer.html'; ?>
+<?php include 'footer.html'; ?>
 
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
     <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">

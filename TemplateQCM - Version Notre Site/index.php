@@ -42,6 +42,23 @@
                 <div class="col-lg-12 text-center">
                     <h2>Mes QCMs</h2>
                     <hr class="star-primary">
+                    <table class="table table-hover">
+                        <thead>
+                            <th>ID QCM</th>
+                            <th>Nom QCM</th>
+                            <th>Date de création</th>
+                            <th>Modifer</th>
+                            <th>Supprimer</th>
+                            <th>Gérer les évaluations</th>
+                        </thead>
+
+                        <?php
+                            require_once("../qcmDao.inc.php");
+                            $toDisplay= '';
+                            foreach(QcmDao::GetQcmByIdCreator(2) as $qcm)
+                                echo '<tr><td>' . $qcm['id_qcm'] . '</td><td>' . $qcm['name'] . '</td><td>' . $qcm['creation_date'] . '</td><td><a href="modify.php?id=' . $qcm['id_qcm'] . '">Modifier</a></td><td><a href="delete.php?id=' . $qcm['id_qcm'] . '">Supprimer</a></td><td><a href="manageEval.php">Gérer les évaluations</a></td></tr>';
+                        ?>
+                    </table>
                 </div>
             </div>
             <div class="row">
@@ -59,7 +76,6 @@
                         </thead>
                         <tbody>
                             <?php 
-                                require_once("../qcmDao.inc.php");
                                 $idUser = 3; //Prendre de la session
                                 $evaluations = EvaluationDao::GetEvaluationByIdUser($idUser);
 
