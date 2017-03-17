@@ -243,7 +243,7 @@ class QcmDao{
     }
 	
 	//Read la bonne réponse en fonction de l'id de la question correspondante (retourne l'id, la réponse, le booléen et l'id de la question)
-	 public static function GetAnswersByIdQuestion($idQuestion){
+	 public static function GetRightAnswerByIdQuestion($idQuestion){
         $req = "SELECT id_answer, answer, right_answer, id_question FROM answer WHERE id_question = :id AND right_answer = 1";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':id', $idQuestion);   
