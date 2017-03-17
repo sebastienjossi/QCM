@@ -1,3 +1,8 @@
+<!-- 
+ Nom : Pierrick et Christophe
+ Date : 17.03.2017
+ Descritpion : ajout d'un lien pour aller sur la page des QCM d'un utilisateur
+ -->
 <!DOCTYPE html>
 <html>
     <head>

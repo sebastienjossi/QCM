@@ -1,3 +1,8 @@
+<!-- 
+ Nom : Pierrick et Christophe
+ Date : 17.03.2017
+ Descritpion : liste des QCM d'un utilisateur
+ -->
 <?php
 include_once("qcmDao.inc.php");
 ?>

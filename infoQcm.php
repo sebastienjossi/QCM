@@ -1,3 +1,8 @@
+<!-- 
+ Nom : Pierrick et Christophe
+ Date : 17.03.2017
+ Descritpion : Affichage d'un QCM passé par un utilisateur avec les réponses justes ou fausses
+ -->
 <?php
 include_once("qcmDao.inc.php");
 ?>
