@@ -1,0 +1,22 @@
+.inline {
+    display: inline-block;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+td {
+    text-align: left;
+}
+
+#portfolio {
+    margin-top: 30px;
+}
+
+.table {
+    margin-top: 50px;
+    margin-bottom: 40px;
+}
