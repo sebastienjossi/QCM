@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<!-- 
+Author : Zoé Cugni
+Last modify on : 17.03.2017
+Goal : Main page. Here, the user can visualize the qcm he created and the evaluation he passed
+Missing : For now, the idUser is written directly, but it should take the one of the user in session. It hasn't been done because the login isn't yet finish
+Note : For the same reason, this page is currently name "index" but won't be later. The login should be the "index".
+-->
 <html>
     <head>
         <meta charset="utf-8">

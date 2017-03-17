@@ -1,3 +1,10 @@
+/*
+Author : Zoé Cugni
+Last modify on : 17.03.2017
+Goal : Override or complete some of the bootstrap theme
+Note : There should be a lot more authors than one in the end, when we merge every custom css file
+*/
+
 .inline {
     display: inline-block;
 }

@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<!-- 
+Author : Zoé Cugni
+Last modify on : 17.03.2017
+Goal : Let the user manage and create evaluation for his qcm
+Missing : Nearly everything, i just created this page and implemented the style.
+-->
 <html>
     <head>
         <meta charset="utf-8">

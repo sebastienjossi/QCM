@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<!-- 
+Author : Zoé Cugni
+Last modify on : 17.03.2017
+Goal : Let the user see his result on an evaluation he passed
+Missing : I want to add the mark on this eval and maybe style the user answer in green/red when it's right/false
+-->
 <html>
     <head>
         <meta charset="utf-8">
