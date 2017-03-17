@@ -1,6 +1,5 @@
 <?php
 include_once("qcmDao.inc.php");
-$cmtp = 0;
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,6 +12,8 @@ $cmtp = 0;
 
         <!-- Theme CSS -->
         <link href="css/freelancer.min.css" rel="stylesheet">
+
+        <link href="css/style.css" rel="stylesheet">
 
         <!-- Custom Fonts -->
         <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -28,12 +29,12 @@ $cmtp = 0;
     </head>
     <body>
         <?php include 'header.html'; ?>
-        <section id="QCM">
+        <section>
             <?php foreach (QcmDao::GetQuestionsByIdQcm($_GET['id']) as $question) { ?>
 
-                <div id="formulaireQuestion" class="createQcm-answer">
-                    <label>Question : <?php echo $question['question']; ?></label>
+                <div id="div">
 
+                    <label>Question : <?php echo $question['question']; ?></label>
                     <?php
                     foreach (QcmDao::GetAnswersByIdQuestion($question['id_question']) as $answer) {
 
@@ -45,11 +46,11 @@ $cmtp = 0;
 
                                 if ($answer['id_answer'] != $rightAnswer['id_answer']) {
                                     ?>
-                                    <input class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"><br>  
+                                    <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"><br>  
                                     <?php
                                 } else {
                                     ?>
-                                    <input class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"style="background-color: green"><br>
+                                    <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"style="background-color: #33cc33; color: white;"><br>
                                     <?php
                                 }
                             }
@@ -60,23 +61,23 @@ $cmtp = 0;
 
                                     if ($answer['id_answer'] != $answerUser['id_answer']) {
                                         ?>
-                                        <input class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"><br>  
+                                        <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"><br>  
                                         <?php
                                     }
                                 } else {
                                     if ($rightAnswer['id_answer'] != $answerUser['id_answer']) {
                                         ?>
-                                        <input class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"style="background-color: green"><br>
+                                        <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"style="background-color: #33cc33; color: white;"><br>
 
                                         <?php
                                     }
                                     if ($rightAnswer['id_answer'] == $answerUser['id_answer']) {
                                         ?>
-                                        <input class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answerUser['answer']; ?>" style="background-color: greenyellow"><br>  
+                                        <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answerUser['answer']; ?>" style="background-color: #8cff66;"><br>  
                                         <?php
                                     } else {
                                         ?>
-                                        <input class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answerUser['answer']; ?>" style="background-color: red"><br>  
+                                        <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answerUser['answer']; ?>" style="background-color: #e60000; color: white;"><br>  
                                         <?php
                                     }
                                 }
