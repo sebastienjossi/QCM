@@ -21,10 +21,10 @@ Version :
         <title>Freelancer - Start Bootstrap Theme</title>
         
         <!-- Bootstrap Core CSS -->
-        <link href="Template QCM/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="TemplateQCM/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Theme CSS -->
-        <link href="Template QCM/css/freelancer.min.css" rel="stylesheet">
+        <link href="TemplateQCM/css/freelancer.min.css" rel="stylesheet">
 
         <!-- Custom Fonts -->
         <link href="Template QCM/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -32,7 +32,7 @@ Version :
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
         <!-- Custion CSS -->
-        <link rel="stylesheet" href="Template QCM/css/style.css" type="text/css">
+        <link rel="stylesheet" href="TemplateQCM/css/style.css" type="text/css">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

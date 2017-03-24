@@ -18,10 +18,10 @@ include_once("qcmDao.inc.php");
         <title>Freelancer - Start Bootstrap Theme</title>
 
         <!-- Bootstrap Core CSS -->
-        <link href="Template QCM/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="TemplateQCM/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Theme CSS -->
-        <link href="Template QCM/css/freelancer.min.css" rel="stylesheet">
+        <link href="TemplateQCM/css/freelancer.min.css" rel="stylesheet">
 
         <!-- Custom Fonts -->
         <link href="Template QCM/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -29,7 +29,7 @@ include_once("qcmDao.inc.php");
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
         <!-- Custion CSS -->
-        <link rel="stylesheet" href="Template QCM/css/style.css" type="text/css">
+        <link rel="stylesheet" href="TemplateQCM/css/style.css" type="text/css">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -300,15 +300,15 @@ include_once("qcmDao.inc.php");
         </div>
 
     <!-- jQuery -->
-    <script src="Template QCM/vendor/jquery/jquery.min.js"></script>
+    <script src="TemplateQCM/vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="Template QCM/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="TemplateQCM/vendor/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 
     <!-- Theme JavaScript -->
-    <script src="Template QCM/js/freelancer.min.js"></script>
+    <script src="TemplateQCM/js/freelancer.min.js"></script>
     </body>
 </html>
