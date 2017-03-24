@@ -67,7 +67,7 @@ Missing : Nearly everything, i just created this page and implemented the style.
                         echo $toDisplay;
                     ?>
                     </table>
-                    <form class="createQCm-qcm">
+                    <form class="createQcm-qcm">
                         <p>Générer une nouvelle évaluation :</p>
                         <label for="name">Nom :</label>
                         <input type="text" placeholder="Nom" id="name" required></input>
