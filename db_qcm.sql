@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --Auteurs : Sven Wikberg et Seb Mata
 -- Client :  127.0.0.1
--- Généré le :  Ven 10 Février 2017 à 09:03
+-- Généré le :  Ven 24 Mars 2017 à 11:00
 -- Version du serveur :  5.6.15-log
 -- Version de PHP :  5.4.24
 
@@ -48,9 +48,9 @@ CREATE TABLE IF NOT EXISTS `evaluation` (
   `id_qcm` int(11) NOT NULL,
   `id_creator` int(11) NOT NULL,
   PRIMARY KEY (`id_evaluation`),
-  UNIQUE KEY `id_qcm` (`id_qcm`),
   UNIQUE KEY `access_code` (`access_code`),
-  KEY `id_creator` (`id_creator`)
+  KEY `id_creator` (`id_creator`),
+  KEY `id_qcm` (`id_qcm`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -171,7 +171,7 @@ ALTER TABLE `answer`
 -- Contraintes pour la table `evaluation`
 --
 ALTER TABLE `evaluation`
-  ADD CONSTRAINT `evaluation_ibfk_1` FOREIGN KEY (`id_qcm`) REFERENCES `qcm` (`id_qcm`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `evaluation_ibfk_3` FOREIGN KEY (`id_qcm`) REFERENCES `qcm` (`id_qcm`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `evaluation_ibfk_2` FOREIGN KEY (`id_creator`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
