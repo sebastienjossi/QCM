@@ -45,20 +45,36 @@ Missing : Nearly everything, i just created this page and implemented the style.
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Evaluations pour ce qcm</h2>
+                    <h2>Evaluations de ce qcm</h2>
                     <hr class="star-primary">
                     <table class="table table-hover">
-                        <tr>
+                        <thead><tr>
                             <th>Nom</th>
                             <th>Code d'accès</th>
-                        </tr>
-                    </table>
+                        </thead></tr>
                     <?php 
                         require_once("qcmDao.inc.php");
-                        /*foreach(EvaluationDao::GetEvaluationByIdQcm($idQcm) as $eval){
+                        $idQcm = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
-                        }*/
+                        $toDisplay = '';
+                        foreach(EvaluationDao::GetEvaluationByIdQcm($idQcm) as $eval){
+                            $toDisplay .= "<tr>";
+                            $toDisplay .= "<td>" . $eval['name'] . "</td>";
+                            $toDisplay .= "<td>" . $eval['access_code'] . "</td>";
+                            $toDisplay .= "</tr>";
+                        }
+
+                        echo $toDisplay;
                     ?>
+                    </table>
+                    <form class="createQCm-qcm">
+                        <p>Générer une nouvelle évaluation :</p>
+                        <label for="name">Nom :</label>
+                        <input type="text" placeholder="Nom" id="name" required></input>
+                        <label for="accessCode">Code d'accès</label>
+                        <input type="text" readonly></input>
+                        <input type="Submit" class="btn btn-default">Générer</input>
+                    </form>
                 </div>
             </div>
         </div>

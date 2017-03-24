@@ -49,7 +49,6 @@ Missing : For now, the idUser is written directly, but it should take the one of
                     <hr class="star-primary">
                     <table class="table table-hover">
                         <thead>
-                            <th>ID QCM</th>
                             <th>Nom QCM</th>
                             <th>Date de création</th>
                             <th>Modifer</th>
@@ -61,14 +60,14 @@ Missing : For now, the idUser is written directly, but it should take the one of
                             require_once("qcmDao.inc.php");
                             $toDisplay= '';
                             foreach(QcmDao::GetQcmByIdCreator(2) as $qcm)
-                                echo '<tr><td>' . $qcm['id_qcm'] . '</td><td>' . $qcm['name'] . '</td><td>' . $qcm['creation_date'] . '</td><td><a href="modify.php?id=' . $qcm['id_qcm'] . '">Modifier</a></td><td><a href="delete.php?id=' . $qcm['id_qcm'] . '">Supprimer</a></td><td><a href="manageEval.php">Gérer les évaluations</a></td></tr>';
+                                echo '<tr><td>' . $qcm['name'] . '</td><td>' . $qcm['creation_date'] . '</td><td><a href="modify.php?id=' . $qcm['id_qcm'] . '">Modifier</a></td><td><a href="delete.php?id=' . $qcm['id_qcm'] . '">Supprimer</a></td><td><a href="manageEval.php?id='. $qcm['id_qcm'] . '">Gérer les évaluations</a></td></tr>';
                         ?>
                     </table>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Mes résultats aux évaluation</h2>
+                    <h2>Mes résultats aux évaluations</h2>
                     <hr class="star-primary">
                     <table class="table table-hover">
                         <thead>
