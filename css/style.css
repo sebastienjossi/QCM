@@ -1,0 +1,18 @@
+/*!
+ * Nom : Pierrick et Christophe
+ * Date : 17.03.2017
+ * Descritpion : rajout du css pour l'affichage des QCM
+ */
+#answerQCM
+{
+    margin-right: auto;
+    margin-left: auto; 
+    width: 50%;
+    text-align: center;
+}
+#div
+{ 
+    margin-top: 10px;
+    text-align: center;
+}
+
