@@ -1,7 +1,7 @@
 -- phpMyAdmin SQL Dump
 -- version 4.1.4
 -- http://www.phpmyadmin.net
---Auteurs : Sven Wikberg et Seb Mata
+-- Auteurs : Sven Wikberg et Seb Mata
 -- Client :  127.0.0.1
 -- Généré le :  Ven 10 Février 2017 à 09:03
 -- Version du serveur :  5.6.15-log

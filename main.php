@@ -59,7 +59,7 @@ Missing : For now, the idUser is written directly, but it should take the one of
                         <?php
                             require_once("qcmDao.inc.php");
                             $toDisplay= '';
-                            foreach(QcmDao::GetQcmByIdCreator(2) as $qcm)
+                            foreach(QcmDao::GetQcmByIdCreator(2) as $qcm) 
                                 echo '<tr><td>' . $qcm['name'] . '</td><td>' . $qcm['creation_date'] . '</td><td><a href="modify.php?id=' . $qcm['id_qcm'] . '">Modifier</a></td><td><a href="delete.php?id=' . $qcm['id_qcm'] . '">Supprimer</a></td><td><a href="manageEval.php?id='. $qcm['id_qcm'] . '">Gérer les évaluations</a></td></tr>';
                         ?>
                     </table>
