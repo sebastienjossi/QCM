@@ -503,3 +503,77 @@ fieldset[disabled] .btn-success.active {
   opacity: 0;
   display: none;
 }
+
+/* Modification for qcm */
+.login-header {
+  margin: 10px 20% 0px;
+  padding: 20px;
+  background: #2094ba;
+}
+.login-header h1 {
+  cursor: default;
+  color: #fff;
+  font-size: 3em;
+  opacity: 1;
+  font-family: Lato;
+}
+.login-header p {
+  font-family: Lato;
+  cursor: pointer;
+  position: absolute;
+  right: 20%;
+  top: 10px;
+  font-size: 1.5em;
+  color: #fff;
+  padding: 10px;
+  background: #006c92;
+}
+
+.login-form {
+  background: #2C3E50;
+  margin: 0 20%;
+  padding: 20px;
+}
+.createQcm-qcm{
+  background: #f2f2f2;
+  margin: 0 20%;
+  padding: 20px;
+}
+.createQcm-question {
+  background: #f2f2f2;
+  margin: 0 15%;
+  padding: 20px;
+}
+.createQcm-answer {
+  background: #f2f2f2;
+  margin: 0 10%;
+  padding: 20px;
+}
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: 100%;
+  height: 2em;
+  border: none;
+  font-size: 1.5em;
+  outline: none;
+  box-sizing: border-box;
+  padding-left: 10px;
+  font-family: Lato;
+}
+.login-form input[type="submit"] {
+  height: 2em;
+  width: 20%;
+  background: #18BC9C;
+  border: none;
+  color: #fff;
+  font-size: 1.5em;
+  cursor: pointer;
+  font-family: Lato;
+}
+.login-form a {
+  color: #cdcdcd;
+  cursor: pointer;
+}
+.login-h2{
+  color: #2C3E50;
+}
