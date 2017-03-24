@@ -274,6 +274,16 @@ class EvaluationDao{
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }  
+	
+	//Read de la table evaluation en fonction d'un id de qcm (retourne toutes les données d'une évaluation correspondant à l'id du qcm)
+    public static function GetEvaluationByIdQcm($idQcm){
+        $req = "SELECT id_evaluation, name, access_code, id_qcm, id_creator FROM evaluation WHERE id_qcm = :id";
+        $sql = QcmPdo::GetPdo()->prepare($req); 
+        $sql->bindParam(':id', $idQcm);   
+        $sql->execute();
+
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
+    }  
 
 	//Read de la table evaluation en fonction du code d'accès (retourne toutes les données de l'évaluation correspondant au code d'accès)
     public static function GetEvaluationByAccessCode($accessCode){

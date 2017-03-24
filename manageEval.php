@@ -1,9 +1,10 @@
-<!-- 
- Nom : Pierrick et Christophe
- Date : 17.03.2017
- Descritpion : ajout d'un lien pour aller sur la page des QCM d'un utilisateur
- -->
 <!DOCTYPE html>
+<!-- 
+Author : Zoé Cugni
+Last modify on : 17.03.2017
+Goal : Let the user manage and create evaluation for his qcm
+Missing : Nearly everything, i just created this page and implemented the style.
+-->
 <html>
     <head>
         <meta charset="utf-8">
@@ -35,24 +36,36 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body id="page-top" class="index">    
+    <body id="page-top" class="index">
+    
 	<?php include 'header.html'; ?>
 
-    <!-- Header -->
-    <header>
+    <!-- Portfolio Grid Section -->
+    <section id="portfolio">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="intro-text">
-                        <span class="name">A remplacer par la page de connexion quand elle sera finie</span>
-                        <hr class="star-light">
-                    </div>
+                <div class="col-lg-12 text-center">
+                    <h2>Evaluations pour ce qcm</h2>
+                    <hr class="star-primary">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Nom</th>
+                            <th>Code d'accès</th>
+                        </tr>
+                    </table>
+                    <?php 
+                        require_once("qcmDao.inc.php");
+                        /*foreach(EvaluationDao::GetEvaluationByIdQcm($idQcm) as $eval){
+
+                        }*/
+                    ?>
                 </div>
             </div>
         </div>
-    </header>
+    </section>
 
-    <?php include 'footer.html'; ?>
+<?php include 'footer.html'; ?>
+
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
     <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
         <a class="btn btn-primary" href="#page-top">
@@ -68,10 +81,6 @@
 
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-
-    <!-- Contact Form JavaScript -->
-    <script src="Template QCM/js/jqBootstrapValidation.js"></script>
-    <script src="Template QCM/js/contact_me.js"></script>
 
     <!-- Theme JavaScript -->
     <script src="Template QCM/js/freelancer.min.js"></script>
