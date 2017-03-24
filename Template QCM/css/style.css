@@ -1,5 +1,5 @@
 /*
-Author : Zoé Cugni
+Author : Zoé, Pierrick et Christophe
 Last modify on : 17.03.2017
 Goal : Override or complete some of the bootstrap theme
 Note : There should be a lot more authors than one in the end, when we merge every custom css file
@@ -26,4 +26,17 @@ td {
 .table {
     margin-top: 50px;
     margin-bottom: 40px;
+}
+
+#answerQCM
+{
+    margin-right: auto;
+    margin-left: auto; 
+    width: 50%;
+    text-align: center;
+}
+#div
+{ 
+    margin-top: 10px;
+    text-align: center;
 }
