@@ -1,5 +1,5 @@
 /*
-Author : Zoé, Pierrick et Christophe
+Author : Loick, Zoé, Pierrick et Christophe
 Last modify on : 17.03.2017
 Goal : Override or complete some of the bootstrap theme
 Note : There should be a lot more authors than one in the end, when we merge every custom css file
@@ -41,6 +41,32 @@ td {
     text-align: center;
 }
 
+#generateEval{
+    width: 100%;
+    margin-left: 0;
+}
+
+#generateEval p {
+    margin-bottom: 25px;
+}
+
+.formBlock{
+    display: inline-block;
+    margin-right: 50px;
+}
+
+.formBlock input, #generateBtn {
+    vertical-align: middle;
+}
+
+.formBlock label, .formBlock input {
+    display: block;
+    text-align: left;
+}
+
+#readonly{
+    background-color: lightgray;
+}
 
 /*Modification for qcm */
 .login-header {

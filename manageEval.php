@@ -45,7 +45,7 @@ Missing : Nearly everything, i just created this page and implemented the style.
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Evaluations de ce qcm</h2>
+                    <h2>Evaluations pour ce qcm</h2>
                     <hr class="star-primary">
                     <table class="table table-hover">
                         <thead><tr>
@@ -64,16 +64,25 @@ Missing : Nearly everything, i just created this page and implemented the style.
                             $toDisplay .= "</tr>";
                         }
 
+                        $idUser = 3; /* manage with session */
                         echo $toDisplay;
                     ?>
                     </table>
-                    <form class="createQcm-qcm">
+                    <form class="createQcm-qcm" id="generateEval" action="functions/generateEval.php" method="post">
                         <p>Générer une nouvelle évaluation :</p>
-                        <label for="name">Nom :</label>
-                        <input type="text" placeholder="Nom" id="name" required></input>
-                        <label for="accessCode">Code d'accès</label>
-                        <input type="text" readonly></input>
-                        <input type="Submit" class="btn btn-default">Générer</input>
+                        <div class="formBlock">
+                            <label for="name">Nom :</label>
+                            <input type="text" id="name" name="name" required></input>
+                        </div>
+                        <div class="formBlock">
+                            <label for="accessCode">Code d'accès :</label>
+                            <input type="text" readonly <?php echo 'value="' . uniqid() . '"'; ?> id="readonly" name="accessCode"></input>
+                        </div>
+                        <!-- needed for sql request, we know these values, no need to bother the user with them -->
+                        <input type="text" name="idQcm" hidden <?php echo 'value="' . $idQcm . '"';?>></input>
+                        <input type="text" name="idCreator" hidden <?php echo 'value="' . $idUser . '"';?>></input>
+
+                        <input type="Submit" class="btn btn-default" value="Générer" id="generateBtn"></input>
                     </form>
                 </div>
             </div>
@@ -100,5 +109,25 @@ Missing : Nearly everything, i just created this page and implemented the style.
 
     <!-- Theme JavaScript -->
     <script src="TemplateQCM/js/freelancer.min.js"></script>
+
+    <script>
+        $("#generateEval").submit(function(e){ 
+            e.preventDefault(); 
+
+            $.ajax({
+            url : 'functions/generateEval.php',
+            type : 'POST',
+            data : $(this).serialize(),  
+            dataType : 'html', //Type de retour (html, xml, json, text)
+            success : function(data){ 
+                location.reload();
+            },
+            error : function(jqXHR){ 
+                alert(jqXHR.responseText);
+            }
+            });
+        });
+
+    </script>
 </body>
 </html>
