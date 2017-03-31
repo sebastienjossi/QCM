@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
 -- version 4.1.4
 -- http://www.phpmyadmin.net
---Auteurs : Sven Wikberg et Seb Mata
+--
 -- Client :  127.0.0.1
--- Généré le :  Ven 10 Février 2017 à 09:03
+-- Généré le :  Ven 31 Mars 2017 à 09:03
 -- Version du serveur :  5.6.15-log
 -- Version de PHP :  5.4.24
 
@@ -76,15 +76,17 @@ CREATE TABLE IF NOT EXISTS `qcm` (
   `id_qcm` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `creation_date` date NOT NULL,
-  PRIMARY KEY (`id_qcm`)
+  `id_creator` int(11) NOT NULL,
+  PRIMARY KEY (`id_qcm`),
+  KEY `id_creator` (`id_creator`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Contenu de la table `qcm`
 --
 
-INSERT INTO `qcm` (`id_qcm`, `name`, `creation_date`) VALUES
-(1, 'oui', '2017-02-13');
+INSERT INTO `qcm` (`id_qcm`, `name`, `creation_date`, `id_creator`) VALUES
+(1, 'oui', '2017-02-13', 2);
 
 -- --------------------------------------------------------
 
@@ -180,6 +182,12 @@ ALTER TABLE `evaluation`
 ALTER TABLE `evaluation_has_user`
   ADD CONSTRAINT `evaluation_has_user_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `evaluation_has_user_ibfk_2` FOREIGN KEY (`id_evaluation`) REFERENCES `evaluation` (`id_evaluation`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `qcm`
+--
+ALTER TABLE `qcm`
+  ADD CONSTRAINT `qcm_ibfk_1` FOREIGN KEY (`id_creator`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `question`

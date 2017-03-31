@@ -123,7 +123,7 @@ class QcmDao{
 
 	//Read de la table qcm en fonction de l'id d'un qcm (retourne l'id le nom et la date de création d'un qcm)
     public static function GetQcmById($idQcm){
-        $req = "SELECT id_qcm, name, creation_date FROM qcm WHERE id_qcm = :id";
+        $req = "SELECT * FROM qcm WHERE id_qcm = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':id', $idQcm);   
         $sql->execute();
@@ -133,7 +133,7 @@ class QcmDao{
 
 	//Read de la table qcm en fonction de l'id du créateur (retourne tout les qcms créés par un même utilisateur)
     public static function GetQcmByIdCreator($idUser){
-        $req = "SELECT qcm.* FROM qcm JOIN evaluation ON evaluation.id_qcm = qcm.id_qcm JOIN user ON user.id_user = evaluation.id_creator WHERE user.id_user = :id";
+        $req = "SELECT qcm.* FROM qcm JOIN user ON user.id_user = qcm.id_creator WHERE user.id_user = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':id', $idUser);   
         $sql->execute();
@@ -297,7 +297,7 @@ class EvaluationDao{
     } 
 	
 	//Read de la table evaluation en fonction de l'id d'un utilisateur (retourne toutes les données de l'évaluation correspondant à l'id utilisateur)
-	public static function GetEvaluationByIduser($idUser){
+	public static function GetEvaluationByIdUser($idUser){
         $req = "SELECT id_evaluation, name, access_code, id_qcm, id_creator FROM evaluation JOIN evaluation_has_user USING(id_evaluation) WHERE id_user = :idUser";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':idUser', $idUser);   
