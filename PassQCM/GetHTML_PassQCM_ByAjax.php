@@ -12,7 +12,7 @@ if (strtolower($action) === "getmaxquestion") {
 function GetMaxQuestion() {
     $idQCM = $_POST['idQ'];
 
-    $qcm = new QcmController($idQCM);
+    $qcm = QcmController::GetQcmController($idQCM);
     echo $qcm->MaxQuestion();
 }
 
@@ -20,6 +20,6 @@ function GetInfos() {
     $idQCM = $_POST['idQ'];
     $numQuestion = $_POST['numQ'];
 
-    $qcm = new QcmController($idQCM);
+    $qcm = QcmController::GetQcmController($idQCM);
     echo $qcm->GetHTMLCode($numQuestion);
 }

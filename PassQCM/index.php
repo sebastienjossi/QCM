@@ -1,8 +1,8 @@
 <?php
-/* 
-Style, forme générale (HTML, CSS): Sirey Loïc 
-Script, PHP: Dürrenmatt Cédric
-*/
+/*
+  Style, forme générale (HTML, CSS): Sirey Loïc
+  Script, PHP: Dürrenmatt Cédric
+ */
 $idQCM = filter_input(INPUT_GET, 'idQ', FILTER_SANITIZE_NUMBER_INT); //id du QCM
 if (!isset($idQCM) || $idQCM == null) {
     header("Location: BACK.php"); //Renvoyer à la page de sélection de QCM
@@ -44,6 +44,46 @@ and open the template in the editor.
     </head>
     <body id="qcmPage">
         <?php include 'header.html'; ?>
+        <section id="layout">
+            <ul>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+                <li>Question 1</li>
+                <li>Question 2</li>
+            </ul>
+        </section>
         <section class="center-block qcm">
             <div id="content">
 
@@ -52,30 +92,49 @@ and open the template in the editor.
         </section>
         <script>
             $(document).ready(function () {
+                //Etape du QCM
                 i = 1;
+                //Appelle une fonction pour savoir le numéro de la dernière question
                 GetMaxQuestion();
+                //Remplace le contenu avec le "i" initialisé avant
                 ReplaceContent();
+                //Cache le bouton avec l'id "back"
+                $("#back").css("visibility", "hidden");
 
                 $("#back").click(function () {
+                    //Si c'est pas la première question
                     if (i > 1) {
+                        //On revient en arrière
                         i -= 1;
+                        //on change le contenu
                         ReplaceContent();
+                        //Si après c'est la première question
+                        if (i === 1) {
+                            //Cache le bouton avec l'id "back"
+                            $("#back").css("visibility", "hidden");
+                        }
                     }
-                    if (i.toString() !== nbQuestion) {
-                        $("#next").text("Suivant");
-                    }
+                    //On remet le text du button avec l'id "next" normal (plus terminé)
+                    $("#next").text("Suivant");
                 });
                 $("#next").click(function () {
+                    //Montre le bouton avec l'id "back"
+                    $("#back").css("visibility", "");
+                    // Si la question était la dernière question (ou plus)
                     if (i >= nbQuestion) {
+                        //on redirige sur une autre page
                         document.location.href = "back.php";
                     }
-
-                    if (i < nbQuestion) {
+                    else { //Si ce n'est pas la dernière question
+                        //On avance dans les questions
                         i += 1;
+                        //on change le contenu
                         ReplaceContent();
                     }
 
+                    //Si la question est la dernière du QCM
                     if (i.toString() === nbQuestion) {
+                        //On change le texte du button avec l'id "next"
                         $("#next").text("Terminé");
                     }
                 });
@@ -90,6 +149,7 @@ and open the template in the editor.
                             action: 'GetMaxQuestion'
                         },
                         success: function (result) {
+                            //nbQuestion est la variable contenant l'id de la dernière question
                             nbQuestion = result;
                         }});
                 }
@@ -105,6 +165,7 @@ and open the template in the editor.
                             action: 'GetInfos'
                         },
                         success: function (result) {
+                            //Change le contenu du div avec l'id "content"
                             $("#content").html(result);
                         }});
                 }
