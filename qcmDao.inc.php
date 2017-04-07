@@ -11,7 +11,7 @@ class QcmPdo{
     public static function GetPdo(){
         try {
             if (!isset($dbPdo)) {
-                $dbc = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME , DB_USER, DB_PWD, array(
+                $dbPdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME , DB_USER, DB_PWD, array(
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
                 PDO::ATTR_PERSISTENT => true));
             }
@@ -19,7 +19,7 @@ class QcmPdo{
             print "Erreur !: " . $e->getMessage() . "<br/>";
             die();
         }
-        return $dbc;
+        return $dbPdo;
     }
 }
 
