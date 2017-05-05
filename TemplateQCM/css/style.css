@@ -68,6 +68,15 @@ td {
     background-color: lightgray;
 }
 
+.horizontal {
+    display: inline-block;
+    width: 50%;
+}
+
+.container_horizontal {
+    width: 100%;
+}
+
 /*Modification for qcm */
 .login-header {
   margin: 10px 20% 0px;

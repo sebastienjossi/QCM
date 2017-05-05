@@ -94,7 +94,7 @@ class UserDao{
     }
 }
 
-class QcmDao{
+class QcmDao {
 	//READ de la table qcm (retourne l'id, le nom, et la date de création)
     public static function GetQcms(){
         $req = "SELECT id_qcm, name, creation_date FROM qcm";
@@ -306,14 +306,23 @@ class EvaluationDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }  
 
-    //Read de la table qcm en fonction d'une evaluation (retourne le qcm correspondant à l'évaluation)
+    //Compte le nombre de participants à une évaluation
     public static function GetNbUserByEvalutionId($idEvaluation){
-        $req = "SELECT COUNT(id_user) FROM evaluation WHERE evaluation.id_evaluation = :id";
+        $req = "SELECT COUNT(id_user) FROM evaluation_has_user WHERE id_evaluation = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':id', $idEvaluation);   
         $sql->execute();
 
-        return $sql->fetchAll(PDO::FETCH_ASSOC);
+        return $sql->fetchAll(PDO::FETCH_NUM);
+    }
+
+    public static function GetEvaluationUser($idEvaluation){
+        $req = "SELECT id_user FROM evaluation_has_user WHERE id_evaluation = :id";
+        $sql = QcmPdo::GetPdo()->prepare($req); 
+        $sql->bindParam(':id', $idEvaluation);
+        $sql->execute();
+
+        return $sql->fetchAll(PDO::FETCH_NUM);
     }  
 
 	//Insert d'une evaluation avec un nom, un code d'accès, un id de qcm et un id de créateur

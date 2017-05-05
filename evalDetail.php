@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!-- 
 Author : Zoé Cugni
-Last modify on : 17.03.2017
-Goal : Let the user manage and create evaluation for his qcm
-Missing : Nearly everything, i just created this page and implemented the style.
+Last modify on : 
+Goal : 
+Missing : 
 -->
 <html>
     <head>
@@ -42,56 +42,27 @@ Missing : Nearly everything, i just created this page and implemented the style.
 
     <!-- Portfolio Grid Section -->
     <section id="portfolio">
-        <div class="container">
-            <div class="row">
+        <div class="container container_horizontal">
+            <div class="row horizontal">
                 <div class="col-lg-12 text-center">
-                    <h2>Evaluations pour ce qcm</h2>
+                    <h2>Liste des participants</h2>
                     <hr class="star-primary">
-                    <table class="table table-hover">
-                        <thead><tr>
-                            <th>Nom</th>
-                            <th>Code d'accès</th>
-                            <th>% de bonne réponse</th>
-                            <th>Nombre de participants</th>
-                            <th>Détails</th>
-                        </thead></tr>
                     <?php 
                         require_once("qcmDao.inc.php");
-                        $idQcm = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-
-                        $nbQuestion = QcmDao::CountQuestionByIdQcm($idQcm);
+                        $idEvaluation = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
                         $toDisplay = '';
-                        
-                        foreach(EvaluationDao::GetEvaluationByIdQcm($idQcm) as $eval){ 
-                            $toDisplay .= "<tr>";
-                            $toDisplay .= "<td>" . $eval['name'] . "</td>";
-                            $toDisplay .= "<td>" . $eval['access_code'] . "</td>";
-                            $toDisplay .= "<td></td>";
-                            $toDisplay .= "<td>" . EvaluationDao::GetNbUserByEvalutionId($eval['id_evaluation'])[0][0] . "</td>";
-                            $toDisplay .= "<td><a href='evalDetail.php?id="  . $eval['id_evaluation'] . "'>Détails</a></td>";
-                            $toDisplay .= "</tr>";
-                        }
 
-                        $idUser = 2; /* manage with session */
+                        foreach(EvaluationDao::GetEvaluationUser($idEvaluation) as $idUser)
+                            $toDisplay .= "<a href='...'>" . UserDao::GetUserById($idUser)[0]['name'] . "</a>";
+
                         echo $toDisplay;
                     ?>
-                    </table>
-                    <form class="createQcm-qcm" id="generateEval" action="functions/generateEval.php" method="post">
-                        <p>Générer une nouvelle évaluation :</p>
-                        <div class="formBlock">
-                            <label for="name">Nom :</label>
-                            <input type="text" id="name" name="name" required></input>
-                        </div>
-                        <div class="formBlock">
-                            <label for="accessCode">Code d'accès :</label>
-                            <input type="text" readonly <?php echo 'value="' . uniqid() . '"'; ?> id="readonly" name="accessCode"></input>
-                        </div>
-                        <!-- needed for sql request, we know these values, no need to bother the user with them -->
-                        <input type="text" name="idQcm" hidden <?php echo 'value="' . $idQcm . '"';?>></input>
-                        <input type="text" name="idCreator" hidden <?php echo 'value="' . $idUser . '"';?>></input>
-
-                        <input type="Submit" class="btn btn-default" value="Générer" id="generateBtn"></input>
-                    </form>
+                </div>
+            </div>
+            <div class="row horizontal">
+                <div class="col-lg-12 text-center">
+                    <h2>% de réussite des questions</h2>
+                    <hr class="star-primary">
                 </div>
             </div>
         </div>
