@@ -1,8 +1,3 @@
-<!-- 
- Nom : Pierrick et Christophe
- Date : 17.03.2017
- Descritpion : Affichage d'un QCM passé par un utilisateur avec les réponses justes ou fausses
- -->
 <?php
 include_once("qcmDao.inc.php");
 ?>
@@ -42,44 +37,18 @@ include_once("qcmDao.inc.php");
         <?php include 'header.html'; ?>
         <section>
             <?php foreach (QcmDao::GetQuestionsByIdQcm($_GET['id']) as $question) { ?>
+            
+                <div class="container" >
+                    <div id="div" class="col-xs-6 col-sm-6 col-md-8">
+                        <label>Question : <?php echo $question['question']; ?></label>
+                        <?php
+                        foreach (QcmDao::GetAnswersByIdQuestion($question['id_question']) as $answer) {
 
-                <div id="div">
-                    <label>Question : <?php echo $question['question']; ?></label>
-                    <?php
-                    foreach (QcmDao::GetAnswersByIdQuestion($question['id_question']) as $answer) {
-                        
-                        // REMPLACER LE 2 PAR LA VARIABLE DE SESSION DE L'ID USER
-                        $ansU = UserDao::GetAnswerFromUserById(2, $_GET['id'], $question['id_question']);
+                            // REMPLACER LE 2 PAR LA VARIABLE DE SESSION DE L'ID USER
+                            $ansU = UserDao::GetAnswerFromUserById(2, $_GET['id'], $question['id_question']);
 
-                        // Si l'utilisateur n'a pas répondu
-                        if (empty($ansU)) {
-                            //Est-ce que cette réponse est juste
-                            if ($answer['right_answer'] == true) {
-                                ?>
-                                <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"style="background-color: #8cff66; border: solid 3px red;"><br>
-                                <?php
-                            } else {
-                                ?>
-                                <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"><br>  
-                                <?php
-                            }
-                        }
-                        foreach ($ansU as $answerUser) {
-
-                            //Est-ce que l'utilisateur a mis cette réponse ?
-                            if ($answer['id_answer'] == $answerUser['id_answer']) {
-
-                                //Est-ce que cette réponse est juste
-                                if ($answer['right_answer'] == true) {
-                                    ?>
-                                    <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>" style="background-color: #8cff66;"><br>  
-                                    <?php
-                                } else {
-                                    ?>
-                                    <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>" style="background-color: #e60000; color: white;"><br>  
-                                    <?php
-                                }
-                            } else {
+                            // Si l'utilisateur n'a pas répondu
+                            if (empty($ansU)) {
                                 //Est-ce que cette réponse est juste
                                 if ($answer['right_answer'] == true) {
                                     ?>
@@ -91,11 +60,68 @@ include_once("qcmDao.inc.php");
                                     <?php
                                 }
                             }
+                            foreach ($ansU as $answerUser) {
+
+                                //Est-ce que l'utilisateur a mis cette réponse ?
+                                if ($answer['id_answer'] == $answerUser['id_answer']) {
+
+                                    //Est-ce que cette réponse est juste
+                                    if ($answer['right_answer'] == true) {
+                                        ?>
+                                        <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>" style="background-color: #8cff66;"><br>  
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>" style="background-color: #e60000; color: white;"><br>  
+                                        <?php
+                                    }
+                                } else {
+                                    //Est-ce que cette réponse est juste
+                                    if ($answer['right_answer'] == true) {
+                                        ?>
+                                        <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"style="border: solid 3px #8cff66;"><br>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"><br>  
+                                        <?php
+                                    }
+                                }
+                            }
                         }
-                    }
-                    ?>
-                    <br>
+                        ?>
+                        <br>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-4">
+                        <div class="intro-text">
+                            <div id="piechart" style="width: 150%; height: 150%;"></div>
+                        </div>
+                    </div>
                 </div>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                    google.charts.load('current', {'packages': ['corechart']});
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    function drawChart() {
+
+                        //SELECT DISTINCT * FROM `user_has_answer`, `answer`, `question` WHERE id_user = 2 AND id_qcm = 1 AND question.id_question = answer.id_question ANd answer.id_answer = `user_has_answer`.id_answer
+
+                        var data = google.visualization.arrayToDataTable([
+                            ['Task', 'Nombre'],
+                            ['Juste', 11],
+                            ['Fausse', 7]
+                        ]);
+
+                        var options = {
+                            title: 'Pourcentage questions'
+                        };
+
+                        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+                        chart.draw(data, options);
+                    }
+                </script>
             <?php } ?>
         </section>
         <?php include 'footer.html'; ?>
