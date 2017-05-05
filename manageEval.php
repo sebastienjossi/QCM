@@ -53,6 +53,7 @@ Missing : Nearly everything, i just created this page and implemented the style.
                             <th>Code d'accès</th>
                             <th>% de bonne réponse</th>
                             <th>Nombre de participants</th>
+                            <th>Détails</th>
                         </thead></tr>
                     <?php 
                         require_once("qcmDao.inc.php");
@@ -64,6 +65,7 @@ Missing : Nearly everything, i just created this page and implemented the style.
                             $toDisplay .= "<tr>";
                             $toDisplay .= "<td>" . $eval['name'] . "</td>";
                             $toDisplay .= "<td>" . $eval['access_code'] . "</td>";
+                            $toDisplay .= "<td></td>";
                             $toDisplay .= "<td></td>";
                             $toDisplay .= "<td></td>";
                             $toDisplay .= "</tr>";

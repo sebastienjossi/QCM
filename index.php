@@ -9,6 +9,9 @@ if (!isset($_SESSION['connect']))
     $_SESSION['connect'] = NULL;
 
 
+print_r(UserDao::GetUsers());
+echo $pwd;
+
 foreach (UserDao::GetUsers() as $row) {
     if ($login == $row['email'] && $pwd == $row['password']) { /* TO-DO: NE marche pas car $pwd est en dure au lieu d'être en hash! */
         $_SESSION['connect'] = 1;

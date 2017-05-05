@@ -3,7 +3,7 @@ session_start();
 $login = filter_input(INPUT_POST, 'user', FILTER_SANITIZE_SPECIAL_CHARS);
 $pwd = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
 //$mdp = sha1($pwd);
-require_once 'function.php';
+require_once("qcmDao.inc.php");
 $dbc = myDB();
 $req = 'SELECT * FROM user';
 if (!isset($_SESSION['connect'])) {
@@ -63,7 +63,7 @@ foreach ($dbc->query($req) as $row) {
                             <hr class="star-light">
                             <span class="skills">Web Developer - Graphic Artist - User Experience Designer 
                               <?php if (!isset($_SESSION['connect'])) { ?>
-                                zbeub
+
                               <?php }  else {?>
                                     Connecter </span>
                           <form class="navbar-form navbar-right" method="POST" action="logOut.php">
