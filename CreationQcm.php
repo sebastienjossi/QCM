@@ -47,15 +47,23 @@ Version :
             <div id="formulaireQcm" class="createQcm-qcm">
                 <label>Nom QCM :</label>
                 <input class="form-control" type="text" name="nameQcm" id="nameQcm"><br>
-                <input class="btn btn-default" type="submit" value="Ajouter une question" onclick="addQuestion()">
-                <br>
-                <input class="btn btn-default" type="submit" value="Créer le QCM" onclick="insert()">
             </div>
-
+            <div class="createQcm-qcm">
+                <input class="btn btn-primary" type="submit" value="Ajouter une question" onclick="addQuestion()">
+                <br>
+                <input class="btn btn-primary" style="float: right;" type="submit" value="Créer le QCM" onclick="insert()">
+            </div>
         </section>
         <?php include 'footer.html'; ?>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>
+                    $(document).ready(function () {
+                        var hauteur_fenetre = $(window).height();
+                        var hauteur_footer = $('footer').height();
+                        var obj = document.getElementById('QCM');
+                        obj.style.minHeight = hauteur_fenetre - hauteur_footer + "px";
+                    });
+
                     var nbQuestion = 0;
                     function addQuestion() {
                         nbQuestion = nbQuestion + 1;
@@ -132,11 +140,8 @@ Version :
                             error();
                         }
                     }
-
-
-
                     function error() {
-                        alert("Entre tous les champs abruti");
+                        alert("Veuillez renseigner tous les champs.");
                     }
         </script>
     </body>
