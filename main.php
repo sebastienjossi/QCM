@@ -80,7 +80,7 @@ Missing : For now, the idUser is written directly, but it should take the one of
                         </thead>
                         <tbody>
                             <?php 
-                                $idUser = 3; //Prendre de la session
+                                $idUser = 2; //Prendre de la session
                                 $evaluations = EvaluationDao::GetEvaluationByIdUser($idUser);
 
                                 for($i = 0; $i < count($evaluations); $i++)

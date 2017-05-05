@@ -51,21 +51,25 @@ Missing : Nearly everything, i just created this page and implemented the style.
                         <thead><tr>
                             <th>Nom</th>
                             <th>Code d'accès</th>
+                            <th>% de bonne réponse</th>
+                            <th>Nombre de participants</th>
                         </thead></tr>
                     <?php 
                         require_once("qcmDao.inc.php");
                         $idQcm = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
                         $toDisplay = '';
+                        
                         foreach(EvaluationDao::GetEvaluationByIdQcm($idQcm) as $eval){ 
-                            /* PROBLEME BASE DE DONNEES : idCreator devrait être dans QCM et non Evaluation, voir avec Ricardo */
                             $toDisplay .= "<tr>";
                             $toDisplay .= "<td>" . $eval['name'] . "</td>";
                             $toDisplay .= "<td>" . $eval['access_code'] . "</td>";
+                            $toDisplay .= "<td></td>";
+                            $toDisplay .= "<td></td>";
                             $toDisplay .= "</tr>";
                         }
 
-                        $idUser = 3; /* manage with session */
+                        $idUser = 2; /* manage with session */
                         echo $toDisplay;
                     ?>
                     </table>

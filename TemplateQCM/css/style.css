@@ -1,5 +1,5 @@
 /*
-Author : Loick, Zoé, Pierrick et Christophe
+Author : Loick, Zoé, Pierrick, Christophe et Florent
 Last modify on : 17.03.2017
 Goal : Override or complete some of the bootstrap theme
 Note : There should be a lot more authors than one in the end, when we merge every custom css file
@@ -140,4 +140,28 @@ td {
 }
 .login-h2{
   color: #2C3E50;
+}
+
+/* Login modification */
+
+.login {
+    background-color: #18BC9C;
+}
+
+.fade {
+    opacity: 1;
+}
+
+.modal {
+    display: block;
+}
+
+input {
+    margin-bottom: 20px;
+}
+
+input[type=submit]{
+    display: block;
+    margin: auto;
+    margin-bottom: 20px;
 }
