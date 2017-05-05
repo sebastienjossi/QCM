@@ -44,53 +44,51 @@ include_once("qcmDao.inc.php");
             <?php foreach (QcmDao::GetQuestionsByIdQcm($_GET['id']) as $question) { ?>
 
                 <div id="div">
-
                     <label>Question : <?php echo $question['question']; ?></label>
                     <?php
                     foreach (QcmDao::GetAnswersByIdQuestion($question['id_question']) as $answer) {
+                        
+                        // REMPLACER LE 2 PAR LA VARIABLE DE SESSION DE L'ID USER
+                        $ansU = UserDao::GetAnswerFromUserById(2, $_GET['id'], $question['id_question']);
 
-                        foreach (QcmDao::GetRightAnswerByIdQuestion($question['id_question']) as $rightAnswer) {
+                        // Si l'utilisateur n'a pas répondu
+                        if (empty($ansU)) {
+                            //Est-ce que cette réponse est juste
+                            if ($answer['right_answer'] == true) {
+                                ?>
+                                <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"style="background-color: #8cff66; border: solid 3px red;"><br>
+                                <?php
+                            } else {
+                                ?>
+                                <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"><br>  
+                                <?php
+                            }
+                        }
+                        foreach ($ansU as $answerUser) {
 
-                            $ansUser = UserDao::GetAnswerFromUserById(2, $_GET['id'], $question['id_question']);
+                            //Est-ce que l'utilisateur a mis cette réponse ?
+                            if ($answer['id_answer'] == $answerUser['id_answer']) {
 
-                            if (empty($ansUser)) {
-
-                                if ($answer['id_answer'] != $rightAnswer['id_answer']) {
+                                //Est-ce que cette réponse est juste
+                                if ($answer['right_answer'] == true) {
+                                    ?>
+                                    <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>" style="background-color: #8cff66;"><br>  
+                                    <?php
+                                } else {
+                                    ?>
+                                    <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>" style="background-color: #e60000; color: white;"><br>  
+                                    <?php
+                                }
+                            } else {
+                                //Est-ce que cette réponse est juste
+                                if ($answer['right_answer'] == true) {
+                                    ?>
+                                    <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"style="background-color: #8cff66; border: solid 3px red;"><br>
+                                    <?php
+                                } else {
                                     ?>
                                     <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"><br>  
                                     <?php
-                                } else {
-                                    ?>
-                                    <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"style="background-color: #33cc33; color: white;"><br>
-                                    <?php
-                                }
-                            }
-
-                            foreach (UserDao::GetAnswerFromUserById(2, $_GET['id'], $question['id_question']) as $answerUser) {
-
-                                if ($rightAnswer['id_answer'] != $answer['id_answer']) {
-
-                                    if ($answer['id_answer'] != $answerUser['id_answer']) {
-                                        ?>
-                                        <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"><br>  
-                                        <?php
-                                    }
-                                } else {
-                                    if ($rightAnswer['id_answer'] != $answerUser['id_answer']) {
-                                        ?>
-                                        <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"style="background-color: #33cc33; color: white;"><br>
-
-                                        <?php
-                                    }
-                                    if ($rightAnswer['id_answer'] == $answerUser['id_answer']) {
-                                        ?>
-                                        <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answerUser['answer']; ?>" style="background-color: #8cff66;"><br>  
-                                        <?php
-                                    } else {
-                                        ?>
-                                        <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answerUser['answer']; ?>" style="background-color: #e60000; color: white;"><br>  
-                                        <?php
-                                    }
                                 }
                             }
                         }

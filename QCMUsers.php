@@ -41,9 +41,7 @@ include_once("qcmDao.inc.php");
 
     </head>
     <body id="page-top" class="index">
-
         <?php include 'header.html'; ?>
-
         <!-- Header -->
         <header>
             <div class="container">
@@ -56,24 +54,27 @@ include_once("qcmDao.inc.php");
                                     <th>Date de création</th>
                                     <th>Nombre de question</th>
                                 </tr>
-                                 <?php foreach (UserDao::GetQcmByIdUser(2) as $value) {
-                                     foreach (QcmDao::CountQuestionByIdQcm($value['id_qcm']) as $row)
-                                     {?>
-                                <tr>
-                                    <td><?php echo '<a style="color: white;" href = "infoQcm.php?id=' . $value['id_qcm'] . '">'.$value['name'].''; ?></td>
-                                    <td><?php echo $value['creation_date'];?></td>
-                                    <td><?php echo $row['nbrQuest'];?></td>
-                                </tr>
-                                 <?php }} ?>
+                                <?php
+                                // REMPLACER LE 2 PAR LA VARIABLE DE SESSION DE L'ID USER
+                                foreach (UserDao::GetQcmByIdUser(2) as $value) {
+                                    foreach (QcmDao::CountQuestionByIdQcm($value['id_qcm']) as $row) {
+                                        ?>
+                                        <tr>
+                                            <td><?php echo '<a style="color: white;" href = "infoQcm.php?id=' . $value['id_qcm'] . '">' . $value['name'] . ''; ?></td>
+                                            <td><?php echo $value['creation_date']; ?></td>
+                                            <td><?php echo $row['nbrQuest']; ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                }
+                                ?>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
         </header>
-
         <?php include 'footer.html'; ?>
-
         <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
         <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
             <a class="btn btn-primary" href="#page-top">

@@ -236,6 +236,15 @@ class QcmDao{
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function CountQuestionByIdQcm($idQcm) {
+        $req = "SELECT COUNT(id_question) AS nbrQuest FROM question WHERE id_qcm = :idQcm";
+        $sql = QcmPdo::GetPdo()->prepare($req);
+        $sql->bindParam(':idQcm', $idQcm);
+        $sql->execute();
+
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
 class EvaluationDao{
