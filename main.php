@@ -39,7 +39,6 @@ Missing : For now, the idUser is written directly, but it should take the one of
     <body id="page-top" class="index">
     
 	<?php include 'header.html'; ?>
-
     <!-- Portfolio Grid Section -->
     <section id="portfolio">
         <div class="container">
@@ -60,7 +59,7 @@ Missing : For now, the idUser is written directly, but it should take the one of
                             require_once("qcmDao.inc.php");
                             $toDisplay= '';
                             foreach(QcmDao::GetQcmByIdCreator(2) as $qcm) 
-                                echo '<tr><td>' . $qcm['name'] . '</td><td>' . $qcm['creation_date'] . '</td><td><a href="modify.php?id=' . $qcm['id_qcm'] . '">Modifier</a></td><td><a href="delete.php?id=' . $qcm['id_qcm'] . '">Supprimer</a></td><td><a href="manageEval.php?id='. $qcm['id_qcm'] . '">Gérer les évaluations</a></td></tr>';
+                                 echo '<tr><td>' . $qcm['name'] . '</td><td>' . $qcm['creation_date'] . '</td><td><a href="modifyQcm.php?id=' . $qcm['id_qcm'] . '"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td><td><a onclick="return myDelete(' . $qcm['id_qcm'] . ')" href=""><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td><td><a href="manageEval.php?id='. $qcm['id_qcm'] . '">Gérer les évaluations</a></td></tr>';
                         ?>
                     </table>
                 </div>
@@ -92,7 +91,7 @@ Missing : For now, the idUser is written directly, but it should take the one of
                                     $toDisplay .= '<td>' . $eval['name'] . '</td>';
                                     $toDisplay .= '<td>' . $eval['qcmName'] . '</td>';
                                     $toDisplay .= '<td>' . $eval['access_code'] . '</td>';
-                                    $toDisplay .= '<td><a href="evalResult.php?eval=' . $eval['id_evaluation'] . '&qcm=' . $eval['id_qcm'] . '" alt="Voir les résultats">Voir les résultats</a>';
+                                    $toDisplay .= '<td><a href="evalResult.php?idQcm=' . $eval['id_qcm'] . '" alt="Voir les résultats">Voir les résultats</a>';
                                     $toDisplay .= '</tr>';
                                 }
 
@@ -125,5 +124,18 @@ Missing : For now, the idUser is written directly, but it should take the one of
 
     <!-- Theme JavaScript -->
     <script src="TemplateQCM/js/freelancer.min.js"></script>
+
+    <script>
+            
+                function myDelete(idQcm)
+                {
+                    if(confirm("Voulez-vous vraiment supprimer ce QCM ?\rToutes les évaluations vont également être supprimées.\rCette action est irréversible."))
+                    {
+                        window.location.href = "deleteQcm.php?idQcm=" + idQcm;
+                        return false;
+                    }
+                }
+
+            </script>
 </body>
 </html>

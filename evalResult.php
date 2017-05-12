@@ -36,7 +36,7 @@ include_once("qcmDao.inc.php");
     <body>
         <?php include 'header.html'; ?>
         <section>
-            <?php foreach (QcmDao::GetQuestionsByIdQcm($_GET['id']) as $question) { ?>
+            <?php foreach (QcmDao::GetQuestionsByIdQcm($_GET['idQcm']) as $question) { ?>
             
                 <div class="container" >
                     <div id="div" class="col-xs-6 col-sm-6 col-md-8">
@@ -45,7 +45,10 @@ include_once("qcmDao.inc.php");
                         foreach (QcmDao::GetAnswersByIdQuestion($question['id_question']) as $answer) {
 
                             // REMPLACER LE 2 PAR LA VARIABLE DE SESSION DE L'ID USER
-                            $ansU = UserDao::GetAnswerFromUserById(2, $_GET['id'], $question['id_question']);
+                            if(isset($_GET['idUser']))
+                                $ansU = UserDao::GetAnswerFromUserById($_GET['idUser'], $_GET['idQcm'], $question['id_question']);
+                            else
+                                $ansU = UserDao::GetAnswerFromUserById(2, $_GET['idQcm'], $question['id_question']);// REMPLACER LE 2 PAR LA VARIABLE DE SESSION DE L'ID USER
 
                             // Si l'utilisateur n'a pas répondu
                             if (empty($ansU)) {

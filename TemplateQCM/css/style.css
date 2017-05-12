@@ -5,6 +5,10 @@ Goal : Override or complete some of the bootstrap theme
 Note : There should be a lot more authors than one in the end, when we merge every custom css file
 */
 
+.block {
+    display: block;
+}
+
 .inline {
     display: inline-block;
 }

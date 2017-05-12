@@ -52,8 +52,10 @@ Missing :
                         $idEvaluation = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
                         $toDisplay = '';
 
-                        foreach(EvaluationDao::GetEvaluationUser($idEvaluation) as $idUser)
-                            $toDisplay .= "<a href='...'>" . UserDao::GetUserById($idUser)[0]['name'] . "</a>";
+                        foreach(EvaluationDao::GetEvaluationUser($idEvaluation) as $idUser){
+                            $qcmId = EvaluationDao::GetQcmByEvaluation($idEvaluation)[0]['id_qcm'];
+                            $toDisplay .= "<a href='evalResult.php?idQcm=" . $qcmId . "&idUser=". $idUser[0] . "' class='block'>" . UserDao::GetUserById($idUser[0])[0]['name'] . "</a>";
+                        }
 
                         echo $toDisplay;
                     ?>
