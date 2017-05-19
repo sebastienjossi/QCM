@@ -45,7 +45,13 @@ include_once("qcmDao.inc.php");
             session_start();
             include 'header.html'; 
         ?>
-        <section>
+        <section style="margin-top: 20px;">
+            <div style="margin-left: 10px; position: absolute;">
+            <h4>Légendes</h4>
+                <input width="50" type="text" readonly value="Réponse juste" style="border: solid 3px #8cff66; text-align: center"><br>
+                <input width="50" type="text" readonly value="Votre réponse juste" style="background-color: #8cff66; text-align: center"><br>   
+                <input width="50" type="text" readonly value="Réponse fausse" style="background-color: #e60000; color: white; text-align: center"><br>   
+            </div>
             <?php foreach (QcmDao::GetQuestionsByIdQcm($_GET['idQcm']) as $question) { ?>
             
                 <div class="container" >
