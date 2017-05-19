@@ -38,7 +38,10 @@ Missing : Nearly everything, i just created this page and implemented the style.
     </head>
     <body id="page-top" class="index">
     
-	<?php include 'header.html'; ?>
+	<?php 
+    session_start();
+    include 'header.html'; 
+    ?>
 
     <!-- Portfolio Grid Section -->
     <section id="portfolio">
@@ -72,7 +75,7 @@ Missing : Nearly everything, i just created this page and implemented the style.
                             $toDisplay .= "</tr>";
                         }
 
-                        $idUser = 2; /* manage with session */
+                        $idUser = $_SESSION['IdUser']; 
                         echo $toDisplay;
                     ?>
                     </table>
@@ -126,7 +129,7 @@ Missing : Nearly everything, i just created this page and implemented the style.
             url : 'functions/generateEval.php',
             type : 'POST',
             data : $(this).serialize(),  
-            dataType : 'html', //Type de retour (html, xml, json, text)
+            dataType : 'html',
             success : function(data){ 
                 location.reload();
             },
@@ -142,6 +145,14 @@ Missing : Nearly everything, i just created this page and implemented the style.
         $("#creationButton").click(function(e){
             e.preventDefault();
             window.location = "/QCM/CreationQcm.php"; 
+        });
+    </script>
+
+    <!-- Redirection on deconnexion -->
+    <script>
+        $("#deconnexionButton").click(function(e){
+            e.preventDefault();
+            window.location = "/QCM/index.php"; 
         });
     </script>
 </body>

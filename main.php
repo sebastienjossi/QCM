@@ -38,7 +38,10 @@ Missing : For now, the idUser is written directly, but it should take the one of
     </head>
     <body id="page-top" class="index">
     
-	<?php include 'header.html'; ?>
+	<?php 
+        session_start();
+        include 'header.html'; 
+    ?>
     <!-- Portfolio Grid Section -->
     <section id="portfolio">
         <div class="container">
@@ -58,7 +61,7 @@ Missing : For now, the idUser is written directly, but it should take the one of
                         <?php
                             require_once("qcmDao.inc.php");
                             $toDisplay= '';
-                            foreach(QcmDao::GetQcmByIdCreator(2) as $qcm) 
+                            foreach(QcmDao::GetQcmByIdCreator($_SESSION['IdUser']) as $qcm) 
                                  echo '<tr><td>' . $qcm['name'] . '</td><td>' . $qcm['creation_date'] . '</td><td><a href="modifyQcm.php?id=' . $qcm['id_qcm'] . '"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td><td><a onclick="return myDelete(' . $qcm['id_qcm'] . ')" href=""><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td><td><a href="manageEval.php?id='. $qcm['id_qcm'] . '">Gérer les évaluations</a></td></tr>';
                         ?>
                     </table>
@@ -133,12 +136,19 @@ Missing : For now, the idUser is written directly, but it should take the one of
         }
     }
   </script>
-
   <!-- Create QCM button redirection -->
   <script>
     $("#creationButton").click(function(e){
         e.preventDefault();
         window.location = "/QCM/CreationQcm.php"; 
+    });
+  </script>
+
+  <!-- Redirection on deconnexion -->
+  <script>
+    $("#deconnexionButton").click(function(e){
+        e.preventDefault();
+        window.location = "/QCM/index.php"; 
     });
   </script>
 </body>

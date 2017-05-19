@@ -34,7 +34,10 @@ include_once("qcmDao.inc.php");
         <![endif]-->
     </head>
     <body>
-        <?php include 'header.html'; ?>
+        <?php 
+            include 'header.html'; 
+            session_start();
+        ?>
         <section>
             <?php foreach (QcmDao::GetQuestionsByIdQcm($_GET['idQcm']) as $question) { ?>
             
@@ -47,7 +50,7 @@ include_once("qcmDao.inc.php");
                             if(isset($_GET['idUser']))
                                 $ansU = UserDao::GetAnswerFromUserById($_GET['idUser'], $_GET['idQcm'], $question['id_question']);
                             else
-                                $ansU = UserDao::GetAnswerFromUserById(2, $_GET['idQcm'], $question['id_question']);// REMPLACER LE 2 PAR LA VARIABLE DE SESSION DE L'ID USER
+                                $ansU = UserDao::GetAnswerFromUserById($_SESSION['IdUser'], $_GET['idQcm'], $question['id_question']);
 
                             // Si l'utilisateur n'a pas répondu
                             if (empty($ansU)) {
@@ -106,9 +109,6 @@ include_once("qcmDao.inc.php");
                     google.charts.setOnLoadCallback(drawChart);
 
                     function drawChart() {
-
-                        //SELECT DISTINCT * FROM `user_has_answer`, `answer`, `question` WHERE id_user = 2 AND id_qcm = 1 AND question.id_question = answer.id_question ANd answer.id_answer = `user_has_answer`.id_answer
-
                         var data = google.visualization.arrayToDataTable([
                             ['Task', 'Nombre'],
                             ['Juste', 11],
@@ -133,6 +133,14 @@ include_once("qcmDao.inc.php");
             $("#creationButton").click(function(e){
                 e.preventDefault();
                 window.location = "/QCM/CreationQcm.php"; 
+            });
+        </script>
+
+        <!-- Redirection on deconnexion -->
+        <script>
+            $("#deconnexionButton").click(function(e){
+                e.preventDefault();
+                window.location = "/QCM/index.php"; 
             });
         </script>
     </body>

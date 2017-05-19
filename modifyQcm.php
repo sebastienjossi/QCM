@@ -1,18 +1,12 @@
 <!-- 
     Auteur : Ricardo
     Utilité : Permet de modifier un QCM donné.
-    
-    -->
+-->
 <?php
-    // Ajouté par Ricardo.
-        include_once("qcmDao.inc.php");
-    
-        $qcm = QcmDao::GetQcmById($_GET['id']);
-        $qcmQuestions = QcmDao::GetQuestionsByIdQcm($_GET['id']);
-    
-        //QcmDao::DeleteQcmByIdQcm(1);
-    
-    ?>
+    include_once("qcmDao.inc.php");
+    $qcm = QcmDao::GetQcmById($_GET['id']);
+    $qcmQuestions = QcmDao::GetQuestionsByIdQcm($_GET['id']);
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -35,7 +29,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>
             var nbQuestion = 0;
-            // Reprit par Ricardo.
             function addQuestion(text) {
                 if(text == undefined)
                     text = "";
@@ -46,7 +39,6 @@
                 $("#formulaireQcm").find(("#btnRemoveQuestion" + numBtnHide + "")).hide();
             }
             
-            // Reprit par Ricardo.
             function addAnswer(numQuestion, text, isCorrect) {
                 if(text == undefined)
                     text = "";
@@ -106,7 +98,6 @@
                         data: {'idQcm': findQcmId(), 'nameQcm': nameQcm, 'answers': answers, 'questions': questions},
                         dataType: 'html',
                         success: function (data) {
-                            //alert(data);
                             document.location.href = "main.php";
                         },
                         error: function (jqXHR) {
@@ -126,9 +117,7 @@
                 <input class="btn btn-default" type="submit" value="Ajouter une question" onclick="addQuestion()">
                 <br>
                 <script>
-                    // Ajouté par Ricardo.
                     var myJson = <?php echo json_encode($qcmQuestions); ?>;
-                    //alert(findQcmId());
                     for(var i in myJson)
                     {
                         addQuestion(myJson[i]["question"]);
@@ -142,7 +131,6 @@
                             url: "ajaxAnswerByIdQuestion.php",
                             async: false,
                             success:function(data){
-                                //alert("YES");
                                 answers = data;
                             },
                             error: function (jqXHR) {
@@ -164,6 +152,14 @@
             $("#creationButton").click(function(e){
                 e.preventDefault();
                 window.location = "/QCM/CreationQcm.php"; 
+            });
+        </script>
+
+        <!-- Redirection on deconnexion -->
+        <script>
+            $("#deconnexionButton").click(function(e){
+                e.preventDefault();
+                window.location = "/QCM/index.php"; 
             });
         </script>
     </body>

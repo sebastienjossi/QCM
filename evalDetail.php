@@ -100,7 +100,7 @@ Missing :
             url : 'functions/generateEval.php',
             type : 'POST',
             data : $(this).serialize(),  
-            dataType : 'html', //Type de retour (html, xml, json, text)
+            dataType : 'html',
             success : function(data){ 
                 location.reload();
             },
@@ -117,6 +117,14 @@ Missing :
         $("#creationButton").click(function(e){
             e.preventDefault();
             window.location = "/QCM/CreationQcm.php"; 
+        });
+    </script>
+
+    <!-- Redirection on deconnexion -->
+    <script>
+        $("#deconnexionButton").click(function(e){
+            e.preventDefault();
+            window.location = "/QCM/index.php"; 
         });
     </script>
 </body>

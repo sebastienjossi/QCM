@@ -53,7 +53,7 @@ class UserDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }  
 	//INSERT un utilisateur dans la table user (avec un nom, un prénom, un email, un mot de passe, et un id de role)
-    public static function InsertUser($name, $firstName, $email, $$passwordH){
+    public static function InsertUser($name, $firstName, $email, $passwordH){
         $req = "INSERT INTO user(name, first_name, email, password) VALUES (:name,:firstName, :email,:passwordH)";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':name', $name);  

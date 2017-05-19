@@ -8,15 +8,11 @@ require_once("qcmDao.inc.php");
 if (!isset($_SESSION['connect'])) 
     $_SESSION['connect'] = NULL;
 
-
-print_r(UserDao::GetUsers());
-// Vérifie si l'email et le mot de passe crypter sont correct
+// Vérifie si l'email et le mot de passe crypté sont correct
 foreach (UserDao::GetUsers() as $row) {
     if ($login == $row['email'] && password_verify($pwd , $row['password']) == true ) { 
         $_SESSION['connect'] = 1;
-		// récupère l'id du user qui c'est connecter
-        $_SESSION['IdUser'] = $row['id'];
-			// récupère le nom et prénom du user qui c'est connecter
+        $_SESSION['IdUser'] = $row['id_user'];
         $_SESSION['User'] = $row['first_name'] . " " . $row['name'];
         header("Location: main.php");
         exit();

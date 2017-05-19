@@ -152,5 +152,13 @@ Version :
                 window.location = "/QCM/CreationQcm.php"; 
             });
         </script>
+
+        <!-- Redirection on deconnexion -->
+        <script>
+            $("#deconnexionButton").click(function(e){
+                e.preventDefault();
+                window.location = "/QCM/index.php"; 
+            });
+        </script>
     </body>
 </html>
