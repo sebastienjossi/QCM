@@ -1,10 +1,3 @@
-<!-- 
-Author : Christophe Kamber & Pierrick Antenen
-Last modify on : 19.05.2017
-Goal : For the evaluation of a user, show his/her answer and the right answer. Display a graphic representing the proportion of right/false answers.
-Status : Finished
--->
-
 <?php
 include_once("qcmDao.inc.php");
 ?>
@@ -18,7 +11,7 @@ include_once("qcmDao.inc.php");
         <meta name="author" content="">
 
         <title>Freelancer - Start Bootstrap Theme</title>
-        
+
         <!-- Bootstrap Core CSS -->
         <link href="TemplateQCM/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -41,25 +34,29 @@ include_once("qcmDao.inc.php");
         <![endif]-->
     </head>
     <body>
-        <?php 
-            session_start();
-            include 'header.html'; 
-        ?>
+        <?php include 'header.html'; ?>
         <section>
+            <div style="padding-top: 20px;">
+                <h4>Légendes</h4>
+                <input width="50" type="text" readonly value="Réponse juste" style="border: solid 3px #8cff66; text-align: center"><br>
+                <input width="50" type="text" readonly value="Votre réponse juste" style="background-color: #8cff66; text-align: center"><br>   
+                <input width="50" type="text" readonly value="Réponse fausse" style="background-color: #e60000; color: white; text-align: center"><br>   
+
+            </div>
             <?php foreach (QcmDao::GetQuestionsByIdQcm($_GET['idQcm']) as $question) { ?>
-            
+
                 <div class="container" >
                     <div id="div" class="col-xs-6 col-sm-6 col-md-8">
                         <label>Question : <?php echo $question['question']; ?></label>
                         <?php
                         foreach (QcmDao::GetAnswersByIdQuestion($question['id_question']) as $answer) {
 
-                            if(isset($_GET['idUser']))
+                            if (isset($_GET['idUser']))
                                 $ansU = UserDao::GetAnswerFromUserById($_GET['idUser'], $_GET['idQcm'], $question['id_question']);
                             else
-                                $ansU = UserDao::GetAnswerFromUserById($_SESSION['IdUser'], $_GET['idQcm'], $question['id_question']);
-
-                            // Si l'utilisateur n'a pas répondu
+                                $ansU = UserDao::GetAnswerFromUserById(2, $_GET['idQcm'], $question['id_question']); // REMPLACER LE 2 PAR LA VARIABLE DE SESSION DE L'ID USER
+                              
+                             // Si l'utilisateur n'a pas répondu
                             if (empty($ansU)) {
                                 //Est-ce que cette réponse est juste
                                 if ($answer['right_answer'] == true) {
@@ -116,6 +113,9 @@ include_once("qcmDao.inc.php");
                     google.charts.setOnLoadCallback(drawChart);
 
                     function drawChart() {
+
+                        //SELECT DISTINCT * FROM `user_has_answer`, `answer`, `question` WHERE id_user = 2 AND id_qcm = 1 AND question.id_question = answer.id_question ANd answer.id_answer = `user_has_answer`.id_answer
+
                         var data = google.visualization.arrayToDataTable([
                             ['Task', 'Nombre'],
                             ['Juste', 11],
@@ -131,8 +131,8 @@ include_once("qcmDao.inc.php");
                         chart.draw(data, options);
                     }
                 </script>
-            <?php } ?>
+        <?php } ?>
         </section>
-        <?php include 'footer.html'; ?>
+<?php include 'footer.html'; ?>
     </body>
 </html>
