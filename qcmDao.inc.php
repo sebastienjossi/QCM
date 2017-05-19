@@ -26,7 +26,7 @@ class QcmPdo{
 class UserDao{
 	//READ la table user  (retourne toutes les données de tout les utilisateurs)
     public static function GetUsers(){
-        $req = "SELECT id_user, name, first_name, email, password, id_role FROM user";
+        $req = "SELECT id_user, name, first_name, email, password FROM user";
         $sql = QcmPdo::GetPdo()->prepare($req);
         $sql->execute();
 
@@ -35,7 +35,7 @@ class UserDao{
 
 	//READ la table user pour un utilisateur à partir de son id (retourne toutes les données de cet utilisateur)
     public static function GetUserById($idUser){
-        $req = "SELECT id_user, name, first_name, email, password, id_role FROM user WHERE id_user = :id";
+        $req = "SELECT id_user, name, first_name, email, password FROM user WHERE id_user = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':id', $idUser);   
         $sql->execute();
@@ -45,7 +45,7 @@ class UserDao{
 
 	//READ la table user pour un utilisateur en fonction d'un email donné (retourne toutes les données de cet utilisateur)
     public static function GetUserByEmail($emailUser){
-        $req = "SELECT id_user, name, first_name, email, password, id_role FROM user WHERE email = :email";
+        $req = "SELECT id_user, name, first_name, email, password FROM user WHERE email = :email";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':email', $emailUser);   
         $sql->execute();
@@ -53,33 +53,16 @@ class UserDao{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }  
 	//INSERT un utilisateur dans la table user (avec un nom, un prénom, un email, un mot de passe, et un id de role)
-    public static function InsertUser($name, $firstName, $email, $password, $idRole){
-        $req = "INSERT INTO user(name, first_name, email, password, id_role) VALUES (:name,:first_name, :email,:password,:id_role)";
+    public static function InsertUser($name, $firstName, $email, $password){
+        $req = "INSERT INTO user(name, first_name, email, password) VALUES (:name,:firstName, :email,:password)";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':name', $name);  
         $sql->bindParam(':firstName', $firstName);  
         $sql->bindParam(':email', $email);  
-        $sql->bindParam(':password', $password);  
-        $sql->bindParam(':idRole', $idRole);  
+        $sql->bindParam(':password', $password); 
         $sql->execute();
     } 
-	//READ de la table Role (retourne tout les roles)
-    public static function GetRoles(){
-        $req = "SELECT id_role, name FROM role";
-        $sql = QcmPdo::GetPdo()->prepare($req);
-        $sql->execute();
-
-        return $sql->fetchAll(PDO::FETCH_ASSOC);
-    }    
-	//READ de la table role en fonction d'un id donné (retourne le nom du role)
-    public static function GetRoleById($idRole){
-        $req = "SELECT id_role, name FROM role WHERE id_role = :id";
-        $sql = QcmPdo::GetPdo()->prepare($req); 
-        $sql->bindParam(':id', $idRole);   
-        $sql->execute();
-
-        return $sql->fetchAll(PDO::FETCH_ASSOC);
-    } 
+   
 	//READ de la table qcm en fonction d'un utilisateur (retourne les données de la table qcm)
     public static function GetQcmByIdUser($idUser){
         $req = "SELECT DISTINCT qcm.id_qcm, qcm.name, qcm.creation_date FROM user JOIN user_has_answer ON user_has_answer.id_user = user.id_user JOIN answer ON answer.id_answer = user_has_answer.id_answer JOIN question ON question.id_question = answer.id_question JOIN qcm ON qcm.id_qcm = question.id_qcm WHERE user.id_user = :id";
@@ -111,7 +94,7 @@ class UserDao{
     }
 }
 
-class QcmDao{
+class QcmDao {
 	//READ de la table qcm (retourne l'id, le nom, et la date de création)
     public static function GetQcms(){
         $req = "SELECT id_qcm, name, creation_date FROM qcm";
@@ -133,7 +116,7 @@ class QcmDao{
 
 	//Read de la table qcm en fonction de l'id du créateur (retourne tout les qcms créés par un même utilisateur)
     public static function GetQcmByIdCreator($idUser){
-        $req = "SELECT qcm.* FROM qcm JOIN evaluation ON evaluation.id_qcm = qcm.id_qcm JOIN user ON user.id_user = evaluation.id_creator WHERE user.id_user = :id";
+        $req = "SELECT qcm.* FROM qcm, user WHERE user.id_user = qcm.id_creator AND qcm.id_creator = :id";
         $sql = QcmPdo::GetPdo()->prepare($req); 
         $sql->bindParam(':id', $idUser);   
         $sql->execute();
@@ -157,6 +140,61 @@ class QcmDao{
         $sql->execute();
         
         QcmPdo::GetPdo()->commit();
+    }
+
+    //Supprime le qcm correspondant à l'id donné (gère également la suppression des questions du qcm et des réponses des questions)
+    public static function DeleteQcmWithEvaluationByIdQcm($idQcm){
+        // Modifié par Ricardo pour éviter les erreurs de suppression et pour supprimer TOUT ce qui est en rapport avec un QCM + correction de certaines erreurs.
+        try
+        {
+			$pdo = QcmPdo::GetPdo();
+			$pdo->beginTransaction();
+
+			$sql = $pdo->prepare("DELETE u 
+            FROM user_has_answer AS u 
+            JOIN answer ON answer.id_answer = u.id_answer 
+            JOIN question ON question.id_question = answer.id_question 
+            JOIN qcm ON qcm.id_qcm = question.id_qcm AND qcm.id_qcm = :id");
+			$sql->bindParam(':id', $idQcm);  
+			$sql->execute();
+
+			// Supprime les évaluations liées à ce QCM.
+			$sql = $pdo->prepare("DELETE FROM evaluation WHERE evaluation.id_qcm = :id");
+			$sql->bindParam(':id', $idQcm);
+			$sql->execute();
+
+			// Supprime le QCM.
+			$sql = $pdo->prepare("DELETE FROM qcm WHERE qcm.id_qcm = :id");
+			$sql->bindParam(':id', $idQcm);  $sql->execute();
+			$pdo->commit();
+			return true;
+        }
+        catch (Exception $e)
+        {
+            $pdo->rollback();
+            return $e;
+            exit($e);
+        }
+    }
+
+    // (Ricardo) Modifie le nom du QCM donné.
+    public static function ModifyQCMName($idQcm, $newName)
+    {
+        $req = "UPDATE qcm SET qcm.name = :newName WHERE qcm.id_qcm = :id";
+        $sql = QcmPdo::GetPdo()->prepare($req); 
+        $sql->bindParam(':newName', $newName);  
+        $sql->bindParam(':id', $idQcm);  
+        $sql->execute();
+    }
+
+    // (Ricardo) Supprimer les questions (et leur réponses) d'un QCM donné.
+    public static function DeleteQuestionsFromQCM($idQcm)
+    {
+        $sql = QcmPdo::GetPdo()->prepare("DELETE FROM question WHERE question.id_qcm = :id");
+        $sql->bindParam(':id', $idQcm);  
+        $sql->execute();
+
+        return $sql->errorInfo();
     }
 
 	//Insert un qcm qui a un nom dans la table qcm
@@ -283,6 +321,16 @@ class EvaluationDao{
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }  
+	
+	//Read de la table evaluation en fonction d'un id de qcm (retourne toutes les données d'une évaluation correspondant à l'id du qcm)
+    public static function GetEvaluationByIdQcm($idQcm){
+        $req = "SELECT id_evaluation, name, access_code, id_qcm, id_creator FROM evaluation WHERE id_qcm = :id";
+        $sql = QcmPdo::GetPdo()->prepare($req); 
+        $sql->bindParam(':id', $idQcm);   
+        $sql->execute();
+
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
+    }  
 
 	//Read de la table evaluation en fonction du code d'accès (retourne toutes les données de l'évaluation correspondant au code d'accès)
     public static function GetEvaluationByAccessCode($accessCode){
@@ -293,6 +341,15 @@ class EvaluationDao{
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     } 
+
+    // Ajouté par Ricardo 
+    public static function GetEvaluationsByIdQcm($idQcm){
+        $sql = QcmPdo::GetPdo()->prepare("SELECT id_evaluation, name, access_code, id_qcm, id_creator FROM evaluation WHERE id_qcm = :id ");
+        $sql->bindParam(":id", $idQcm);
+        $sql->execute();
+
+        return $sql->fetchALL(PDO::FETCH_ASSOC);
+    }
 	
 	//Read de la table evaluation en fonction de l'id d'un utilisateur (retourne toutes les données de l'évaluation correspondant à l'id utilisateur)
 	public static function GetEvaluationByIduser($idUser){
@@ -311,6 +368,25 @@ class EvaluationDao{
         $sql->execute();
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
+    }  
+
+    //Compte le nombre de participants à une évaluation
+    public static function GetNbUserByEvalutionId($idEvaluation){
+        $req = "SELECT COUNT(id_user) FROM evaluation_has_user WHERE id_evaluation = :id";
+        $sql = QcmPdo::GetPdo()->prepare($req); 
+        $sql->bindParam(':id', $idEvaluation);   
+        $sql->execute();
+
+        return $sql->fetchAll(PDO::FETCH_NUM);
+    }
+
+    public static function GetEvaluationUser($idEvaluation){
+        $req = "SELECT id_user FROM evaluation_has_user WHERE id_evaluation = :id";
+        $sql = QcmPdo::GetPdo()->prepare($req); 
+        $sql->bindParam(':id', $idEvaluation);
+        $sql->execute();
+
+        return $sql->fetchAll(PDO::FETCH_NUM);
     }  
 
 	//Insert d'une evaluation avec un nom, un code d'accès, un id de qcm et un id de créateur
