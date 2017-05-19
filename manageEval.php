@@ -42,8 +42,7 @@ Missing : Nearly everything, i just created this page and implemented the style.
     session_start();
     include 'header.html'; 
     ?>
-
-    <!-- Portfolio Grid Section -->
+    
     <section id="portfolio">
         <div class="container">
             <div class="row">

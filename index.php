@@ -101,13 +101,5 @@ foreach (UserDao::GetUsers() as $row) {
                                             <button type="submit" class="btn btn-default">Log Out</button>
                                         </form>
                                     <?php } ?>
-
-                                      <!-- Create QCM button redirection -->
-                                    <script>
-                                        $("#creationButton").click(function(e){
-                                            e.preventDefault();
-                                            window.location = "/QCM/CreationQcm.php"; 
-                                        });
-                                    </script>
                                     </body>
                                     </html>

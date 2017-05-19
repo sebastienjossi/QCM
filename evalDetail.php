@@ -38,9 +38,11 @@ Missing :
     </head>
     <body id="page-top" class="index">
     
-	<?php include 'header.html'; ?>
+	<?php 
+        session_start();
+        include 'header.html'; 
+    ?>
 
-    <!-- Portfolio Grid Section -->
     <section id="portfolio">
         <div class="container container_horizontal">
             <div class="row horizontal">
@@ -80,18 +82,6 @@ Missing :
         </a>
     </div>
 
-    <!-- jQuery -->
-    <script src="TemplateQCM/vendor/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="TemplateQCM/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-
-    <!-- Theme JavaScript -->
-    <script src="TemplateQCM/js/freelancer.min.js"></script>
-
     <script>
         $("#generateEval").submit(function(e){ 
             e.preventDefault(); 
@@ -112,20 +102,6 @@ Missing :
 
     </script>
     
-    <!-- Create QCM button redirection -->
-    <script>
-        $("#creationButton").click(function(e){
-            e.preventDefault();
-            window.location = "/QCM/CreationQcm.php"; 
-        });
-    </script>
 
-    <!-- Redirection on deconnexion -->
-    <script>
-        $("#deconnexionButton").click(function(e){
-            e.preventDefault();
-            window.location = "/QCM/index.php"; 
-        });
-    </script>
 </body>
 </html>

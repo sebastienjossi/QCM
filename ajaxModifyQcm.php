@@ -1,9 +1,7 @@
 <?php
     /*
-    
     Auteur : Ricardo
     Utilité : Modifie le QCM donné en le supprimant puis en le réécrivant.
-	
     */
 
     require_once('qcmDao.inc.php');

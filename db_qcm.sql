@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 12 Mai 2017 à 08:13
+-- Généré le :  Ven 19 Mai 2017 à 09:24
 -- Version du serveur :  10.1.16-MariaDB
 -- Version de PHP :  5.6.24
 
@@ -38,14 +38,16 @@ CREATE TABLE `answer` (
 --
 
 INSERT INTO `answer` (`id_answer`, `answer`, `right_answer`, `id_question`) VALUES
-(1, '2 km2', 0, 1),
-(2, '100 000km2', 1, 1),
-(5, 'Iffset Latin', 1, 2),
-(6, 'Señor !', 0, 2),
-(9, 'tata !', 1, 3),
-(10, 'Titi..', 0, 3),
-(11, 'vader retro satanas', 0, 4),
-(12, 'welcome', 1, 4);
+(24, 'Oui.', 1, 12),
+(160, 'asd', 1, 123),
+(161, 'rtt', 0, 123),
+(162, 'dfgdfgdfgdfgdf', 1, 124),
+(163, 'dgdfgdfgdfgdf', 0, 124),
+(164, 'jfghfg', 0, 124),
+(167, 'Oui', 1, 127),
+(168, 'Non', 0, 127),
+(169, 'En effet', 0, 128),
+(170, 'Bonne chance', 1, 128);
 
 -- --------------------------------------------------------
 
@@ -86,8 +88,8 @@ CREATE TABLE `evaluation_has_user` (
 
 INSERT INTO `evaluation_has_user` (`id_user`, `id_evaluation`) VALUES
 (2, 3),
-(2, 4),
-(5, 3);
+(5, 3),
+(5, 4);
 
 -- --------------------------------------------------------
 
@@ -107,7 +109,9 @@ CREATE TABLE `qcm` (
 --
 
 INSERT INTO `qcm` (`id_qcm`, `name`, `creation_date`, `id_creator`) VALUES
-(1, 'oui', '2017-02-13', 2);
+(1, 'oui Test', '2017-02-13', 8),
+(5, 'TEST2', '2017-05-12', 8),
+(8, 'Test 1', '2017-05-19', 8);
 
 -- --------------------------------------------------------
 
@@ -126,10 +130,11 @@ CREATE TABLE `question` (
 --
 
 INSERT INTO `question` (`id_question`, `question`, `id_qcm`) VALUES
-(1, 'Taille de l''asie?', 1),
-(2, 'Lorem Ipsum ?', 1),
-(3, 'TOTO?', 1),
-(4, 'Hi ?', 1);
+(12, 'Oui ?', 5),
+(123, 'Taille de l''asie?', 1),
+(124, 'Lorem Ipsum ?', 1),
+(127, 'Cela fonctionne-t''il?', 8),
+(128, 'Fucking bug', 8);
 
 -- --------------------------------------------------------
 
@@ -142,7 +147,7 @@ CREATE TABLE `user` (
   `name` varchar(50) NOT NULL,
   `first_name` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -151,7 +156,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id_user`, `name`, `first_name`, `email`, `password`) VALUES
 (2, 'oui', 'oui', '', '123'),
-(5, 'Cugni', 'Zoé', 'zoe.cugni@gmail.com', '$2y$10$Q/f6Va2RTIaaSc2pgV0ENeyp/40qViPxYMNu/t.Hmty');
+(5, 'Cugni', 'Zoé', 'zoe.cugni@gmail.com', '$2y$10$Q/f6Va2RTIaaSc2pgV0ENeyp/40qViPxYMNu/t.Hmty'),
+(8, 'Test Eval', 'test', 'test@gmail.com', '$2y$10$bIJk8hjxJAp.yJN1LT3b1uz5g4bNv8JgOKtf.ycUq.Fv6DVOTm9dC');
 
 -- --------------------------------------------------------
 
@@ -169,14 +175,11 @@ CREATE TABLE `user_has_answer` (
 --
 
 INSERT INTO `user_has_answer` (`id_user`, `id_answer`) VALUES
-(2, 2),
-(2, 6),
-(2, 9),
-(2, 11),
-(5, 2),
-(5, 6),
-(5, 10),
-(5, 12);
+(2, 160),
+(2, 164),
+(5, 24),
+(5, 160),
+(5, 163);
 
 --
 -- Index pour les tables exportées
@@ -240,7 +243,7 @@ ALTER TABLE `user_has_answer`
 -- AUTO_INCREMENT pour la table `answer`
 --
 ALTER TABLE `answer`
-  MODIFY `id_answer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_answer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
 --
 -- AUTO_INCREMENT pour la table `evaluation`
 --
@@ -250,17 +253,17 @@ ALTER TABLE `evaluation`
 -- AUTO_INCREMENT pour la table `qcm`
 --
 ALTER TABLE `qcm`
-  MODIFY `id_qcm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_qcm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT pour la table `question`
 --
 ALTER TABLE `question`
-  MODIFY `id_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- Contraintes pour les tables exportées
 --
@@ -286,6 +289,12 @@ ALTER TABLE `evaluation_has_user`
   ADD CONSTRAINT `evaluation_has_user_ibfk_2` FOREIGN KEY (`id_evaluation`) REFERENCES `evaluation` (`id_evaluation`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Contraintes pour la table `qcm`
+--
+ALTER TABLE `qcm`
+  ADD CONSTRAINT `qcm_ibfk_1` FOREIGN KEY (`id_creator`) REFERENCES `user` (`id_user`);
+
+--
 -- Contraintes pour la table `question`
 --
 ALTER TABLE `question`
@@ -296,7 +305,7 @@ ALTER TABLE `question`
 --
 ALTER TABLE `user_has_answer`
   ADD CONSTRAINT `user_has_answer_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `user_has_answer_ibfk_2` FOREIGN KEY (`id_answer`) REFERENCES `answer` (`id_answer`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_has_answer_ibfk_2` FOREIGN KEY (`id_answer`) REFERENCES `answer` (`id_answer`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

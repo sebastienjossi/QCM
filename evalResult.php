@@ -35,8 +35,8 @@ include_once("qcmDao.inc.php");
     </head>
     <body>
         <?php 
-            include 'header.html'; 
             session_start();
+            include 'header.html'; 
         ?>
         <section>
             <?php foreach (QcmDao::GetQuestionsByIdQcm($_GET['idQcm']) as $question) { ?>
@@ -127,21 +127,5 @@ include_once("qcmDao.inc.php");
             <?php } ?>
         </section>
         <?php include 'footer.html'; ?>
-
-        <!-- Create QCM button redirection -->
-        <script>
-            $("#creationButton").click(function(e){
-                e.preventDefault();
-                window.location = "/QCM/CreationQcm.php"; 
-            });
-        </script>
-
-        <!-- Redirection on deconnexion -->
-        <script>
-            $("#deconnexionButton").click(function(e){
-                e.preventDefault();
-                window.location = "/QCM/index.php"; 
-            });
-        </script>
     </body>
 </html>
