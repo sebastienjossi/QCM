@@ -1,18 +1,17 @@
 <?php
 $login = filter_input(INPUT_POST, 'user', FILTER_SANITIZE_SPECIAL_CHARS);
 $pwd = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
-$mdp = sha1($pwd);
-//password hash
-//password verify
 require_once("qcmDao.inc.php");
-
+//Empêche l'accès direct à certaines pages sans être connecter
 if (!isset($_SESSION['connect']))
     $_SESSION['connect'] = NULL;
-
+// Vérifie si l'email et le mot de passe crypter sont correct
 foreach (UserDao::GetUsers() as $row) {
-    if ($login == $row['email'] && $mdp == $row['password']) {
+    if ($login == $row['email'] && password_verify($pwd , $row['password']) == true ) {
         $_SESSION['connect'] = 1;
+		// récupère l'id du user qui c'est connecter
         $_SESSION['IdUser'] = $row['id'];
+		// récupère l'email du user qui c'est connecter
         $_SESSION['email'] = $row['email'];
     }
 }

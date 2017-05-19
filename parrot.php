@@ -14,7 +14,7 @@
 
     $passwordH = password_hash($pwd, PASSWORD_DEFAULT);
     $erreur = array();
-        
+        // Gère les erreurs
     if (filter_has_var(INPUT_POST, "submit")) {
         if (empty($email)) {
             $erreur['email'] = "L'email ne peut pas être vide";
@@ -33,7 +33,7 @@
         } elseif ($pwd != $pwd2) {
             $erreur['pwd'] = "Les mots de passe ne sont pas les même ";
         }
-
+// Si il n'y a pas d'erreur le formulaire envoie les données à la base
         if (empty($erreur)) {
             require_once("qcmDao.inc.php");
             UserDao::InsertUser($name, $fname, $email, $passwordH);

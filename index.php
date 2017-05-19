@@ -4,18 +4,19 @@ $login = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
 $pwd = filter_input(INPUT_POST, 'pwd', FILTER_SANITIZE_SPECIAL_CHARS);
 
 require_once("qcmDao.inc.php");
-
+//Empêche l'accès direct à certaines pages sans être connecter
 if (!isset($_SESSION['connect'])) 
     $_SESSION['connect'] = NULL;
 
 
 print_r(UserDao::GetUsers());
-echo $pwd;
-
+// Vérifie si l'email et le mot de passe crypter sont correct
 foreach (UserDao::GetUsers() as $row) {
-    if ($login == $row['email'] && $pwd == $row['password']) { /* TO-DO: NE marche pas car $pwd est en dure au lieu d'être en hash! */
+    if ($login == $row['email'] && password_verify($pwd , $row['password']) == true ) { 
         $_SESSION['connect'] = 1;
+		// récupère l'id du user qui c'est connecter
         $_SESSION['IdUser'] = $row['id'];
+			// récupère le nom et prénom du user qui c'est connecter
         $_SESSION['User'] = $row['first_name'] . " " . $row['name'];
         header("Location: main.php");
         exit();
