@@ -198,10 +198,11 @@ class QcmDao {
     }
 
 	//Insert un qcm qui a un nom dans la table qcm
-    public static function InsertQcm($name){
-        $req = "INSERT INTO qcm(name, creation_date) VALUES (:name, NOW())";
+    public static function InsertQcm($name, $idCreator){
+        $req = "INSERT INTO qcm(name, creation_date) VALUES (:name, NOW(), :idCreator)";
         $sql = QcmPdo::GetPdo()->prepare($req); 
-        $sql->bindParam(':name', $name);  
+        $sql->bindParam(':name', $name);
+        $sql->bindParam(':idCreator', $idCreator);   
         $sql->execute();
     }
 

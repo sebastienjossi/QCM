@@ -87,6 +87,10 @@ td {
     width: 100%;
 }
 
+#creationButton {
+    margin-right: 10px;
+}
+
 /*Modification for qcm */
 .login-header {
   margin: 10px 20% 0px;

@@ -104,7 +104,7 @@ Missing : For now, the idUser is written directly, but it should take the one of
         </div>
     </section>
 
-<?php include 'footer.html'; ?>
+    <?php include 'footer.html'; ?>
 
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
     <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
@@ -126,16 +126,20 @@ Missing : For now, the idUser is written directly, but it should take the one of
     <script src="TemplateQCM/js/freelancer.min.js"></script>
 
     <script>
-            
-                function myDelete(idQcm)
-                {
-                    if(confirm("Voulez-vous vraiment supprimer ce QCM ?\rToutes les évaluations vont également être supprimées.\rCette action est irréversible."))
-                    {
-                        window.location.href = "deleteQcm.php?idQcm=" + idQcm;
-                        return false;
-                    }
-                }
+    function myDelete(idQcm){
+        if(confirm("Voulez-vous vraiment supprimer ce QCM ?\rToutes les évaluations vont également être supprimées.\rCette action est irréversible.")){
+            window.location.href = "deleteQcm.php?idQcm=" + idQcm;
+            return false;
+        }
+    }
+  </script>
 
-            </script>
+  <!-- Create QCM button redirection -->
+  <script>
+    $("#creationButton").click(function(e){
+        e.preventDefault();
+        window.location = "/QCM/CreationQcm.php"; 
+    });
+  </script>
 </body>
 </html>

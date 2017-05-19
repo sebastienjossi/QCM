@@ -111,5 +111,13 @@ Missing :
         });
 
     </script>
+    
+    <!-- Create QCM button redirection -->
+    <script>
+        $("#creationButton").click(function(e){
+            e.preventDefault();
+            window.location = "/QCM/CreationQcm.php"; 
+        });
+    </script>
 </body>
 </html>

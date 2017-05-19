@@ -75,8 +75,6 @@ foreach ($dbc->query($req) as $row) {
                 </div>
             </div>
         </header>
-
-        
         
         <!-- Portfolio Grid Section -->
         <section id="portfolio">

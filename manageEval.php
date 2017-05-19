@@ -135,7 +135,14 @@ Missing : Nearly everything, i just created this page and implemented the style.
             }
             });
         });
+    </script>
 
+    <!-- Create QCM button redirection -->
+    <script>
+        $("#creationButton").click(function(e){
+            e.preventDefault();
+            window.location = "/QCM/CreationQcm.php"; 
+        });
     </script>
 </body>
 </html>

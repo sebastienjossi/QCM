@@ -17,7 +17,7 @@ $questions = $_POST['questions'];
 $reponses = $_POST['answers'];
 if (isset($nomQcm)&& isset($reponses) && isset($questions)) {
     $response_array['status'] = 'success';
-    QcmDao::InsertQcm($nomQcm);
+    QcmDao::InsertQcm($nomQcm, 2); //USE THE SESSION VARIABLE!!
     $lastIDQcm = QcmPdo::GetPdo()->lastInsertId();
     $numQuestion = 0;
     foreach ($questions as $question) {
@@ -34,6 +34,3 @@ if (isset($nomQcm)&& isset($reponses) && isset($questions)) {
     $response_array['status'] = 'error';
 }
 echo json_encode($response_array);
-
-
-
