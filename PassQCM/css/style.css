@@ -1,0 +1,84 @@
+/* Loïc Sirey */ 
+
+#qcmPage {
+    background-color: white;
+    text-align: center;
+}
+
+.qcm {
+    margin-top: 10%;
+}
+
+.qcm button {
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.qcm button, .qcm p {
+    display: block;
+}
+
+.btnPagination {
+    display: inline-block !important;
+}
+
+.btnPagination:first-child {
+    margin-right: 10px;
+}
+
+.qcm p {
+    color: white;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+header{
+background-color: white;
+color: black;
+font-size: 20pt;
+}
+
+#question{
+    font-size: 15pt;
+    margin-bottom: 10pt;
+}
+
+#content{  
+    margin-right: 30%;
+    margin-left: 30%;
+    border-bottom: 4pt solid #2C3E50;
+}
+
+#next{
+    margin-top: 15pt;
+}
+
+#back{
+    margin-top: 15pt;
+}
+
+#star-primary{
+    font-size: 10px;
+    max-width: 100%;
+}
+
+#layout{
+    display: block;
+    position: absolute;
+    width: 10%;
+    height: 65%;
+    margin-left: 0pt;
+    margin-right: auto;
+    margin-bottom: 0pt;
+    margin-top: 0pt;
+    overflow-y: hidden;
+    overflow-y: auto;
+    background-color: #2C3E50;
+    color: white;
+    padding: 20px;    
+    padding-left: 0px;
+}
