@@ -1,3 +1,10 @@
+<!-- 
+Author : Florent Jaquerod
+Last modify on : 19.05.2017
+Goal : Sign up page 
+Status : Finished 
+-->
+
 <?php
 $login = filter_input(INPUT_POST, 'user', FILTER_SANITIZE_SPECIAL_CHARS);
 $pwd = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);

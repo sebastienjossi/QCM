@@ -1,8 +1,8 @@
 <!--
-        Florent Jaquerod
-        IFA-P3C
-        2017
-       Verification des données reçue par le formulaire 
+Author : Florent Jaquerod
+Last modify on : 19.05.2017
+Goal : Check sign up data before inserting them in the db
+Status : Finished 
 -->
 <?php
     session_start();

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <!-- 
 Author : Zoé Cugni
-Last modify on : 
-Goal : 
-Missing : 
+Last modify on : 19.05.2017
+Goal : Show the detail of an evaluation (participant and success rate of the questions)
+Status : Unfinished
+Missing : Succes rate of the questions
 -->
 <html>
     <head>

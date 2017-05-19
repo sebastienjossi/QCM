@@ -1,8 +1,11 @@
 <?php
 /*
-Auteurs: Sven Wikberg et Seb Mata
-3 objets PHP et ensembles des fonctions pour intéragire avec la base de données
+Author : Sven Wikberg et Seb Mata
+Last modify on : 19.05.2017
+Goal : 3 object PHP containing the functions to interact with the database
+Status : Finished 
 */
+
 require_once 'config.inc.php';
 
 class QcmPdo{

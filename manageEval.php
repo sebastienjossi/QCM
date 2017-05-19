@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!-- 
 Author : Zoé Cugni
-Last modify on : 17.03.2017
+Last modify on : 19.05.2017
 Goal : Let the user manage and create evaluation for his qcm
-Missing : Nearly everything, i just created this page and implemented the style.
+Missing : Rate of success of the questions 
 -->
 <html>
     <head>
@@ -108,9 +108,6 @@ Missing : Nearly everything, i just created this page and implemented the style.
         </a>
     </div>
 
-    <!-- jQuery -->
-    <script src="TemplateQCM/vendor/jquery/jquery.min.js"></script>
-
     <!-- Bootstrap Core JavaScript -->
     <script src="TemplateQCM/vendor/bootstrap/js/bootstrap.min.js"></script>
 
@@ -136,22 +133,6 @@ Missing : Nearly everything, i just created this page and implemented the style.
                 alert(jqXHR.responseText);
             }
             });
-        });
-    </script>
-
-    <!-- Create QCM button redirection -->
-    <script>
-        $("#creationButton").click(function(e){
-            e.preventDefault();
-            window.location = "/QCM/CreationQcm.php"; 
-        });
-    </script>
-
-    <!-- Redirection on deconnexion -->
-    <script>
-        $("#deconnexionButton").click(function(e){
-            e.preventDefault();
-            window.location = "/QCM/index.php"; 
         });
     </script>
 </body>

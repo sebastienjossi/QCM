@@ -1,6 +1,8 @@
 <!-- 
-    Auteur : Ricardo
-    Utilité : Permet de modifier un QCM donné.
+    Author : Ricardo Nunes Oliveira
+    Last modify on : 19.05.2017
+    Goal : Interface to modify a given QCM
+    Status : Finished 
 -->
 <?php
     include_once("qcmDao.inc.php");

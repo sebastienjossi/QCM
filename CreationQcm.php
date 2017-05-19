@@ -1,16 +1,13 @@
+<!-- 
+Author : Loick Pipolo, Ivan Trifunovic
+Last modify on : 19.05.2017
+Goal : Qcm creation interface, send the data to controleur.php in ajax
+Status : Finished 
+-->
+
 
 <!DOCTYPE html>
 <html>
-    <!--/*
-Dévleppeur : 
-Loick Pipolo, Ivan Trifunovic
-Description :
-Interface de création de qcm qui envoie les données à controleur.php en ajax
-Date :
-17.03.2017
-Version :
-1.0
-*/-->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -140,6 +137,7 @@ Version :
                             error();
                         }
                     }
+
                     function error() {
                         alert("Veuillez renseigner tous les champs.");
                     }

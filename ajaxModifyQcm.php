@@ -1,9 +1,11 @@
-<?php
-    /*
-    Auteur : Ricardo
-    Utilité : Modifie le QCM donné en le supprimant puis en le réécrivant.
-    */
+<!-- 
+Author : Ricardo Nunes Oliveira
+Last modify on : 19.05.2017
+Goal : Modify a QCM by deleting and re-inserting it with new data
+Status : Finished 
+-->
 
+<?php
     require_once('qcmDao.inc.php');
 
     $qcmName = $_POST['nameQcm'];

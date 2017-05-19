@@ -1,3 +1,10 @@
+<!-- 
+Author : Florent Jaquerod
+Last modify on : 19.05.2017
+Goal : Connexion page 
+Status : Finished 
+-->
+
 <?php
 session_start();
 $login = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);

@@ -1,16 +1,11 @@
+<!-- 
+Author : Loick Pipolo, Ivan Trifunovic
+Last modify on : 19.05.2017
+Goal : Check the data sent by CreationQcm.php and insert them in the db
+Status : Finished 
+-->
 
 <?php
-/*
-Dévleppeur : 
-Loick Pipolo, Ivan Trifunovic
-Description :
-Controleur qui gère les données envoyer par le fichier CreationQcm.php
-et les envoie dans la base de données
-Date :
-17.03.2017
-Version :
-1.0
-*/
 include_once 'qcmDao.inc.php';
 session_start();
 

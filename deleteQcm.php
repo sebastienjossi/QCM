@@ -1,9 +1,11 @@
-<?php
-    /* 
-    Autheur : Ricardo
-    Fonctionnalité : Supprime un QCM. Si la suppression s'est bien passée, l'utilisateur retourne à la liste des QCM, sinon, un message d'erreur apparaît.
-    */
+<!-- 
+Author : Ricardo Nunes Oliveira
+Last modify on : 19.05.2017
+Goal : Delete a QCM, redirect on succes, show error otherwise
+Status : Finished 
+-->
 
+<?php
     include_once("qcmDao.inc.php");
     $idQcm = $_GET['idQcm'];
     $deleteReturn = QcmDao::DeleteQcmWithEvaluationByIdQcm($idQcm);

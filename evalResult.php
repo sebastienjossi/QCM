@@ -1,3 +1,10 @@
+<!-- 
+Author : Christophe Kamber & Pierrick Antenen
+Last modify on : 19.05.2017
+Goal : For the evaluation of a user, show his/her answer and the right answer. Display a graphic representing the proportion of right/false answers.
+Status : Finished
+-->
+
 <?php
 include_once("qcmDao.inc.php");
 ?>
@@ -57,7 +64,7 @@ include_once("qcmDao.inc.php");
                                 //Est-ce que cette réponse est juste
                                 if ($answer['right_answer'] == true) {
                                     ?>
-                                    <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"style="background-color: #8cff66; border: solid 3px red;"><br>
+                                    <input id="answerQCM" class="form-control" type="text" name="nameQcm" readonly value="<?php echo $answer['answer']; ?>"style="border: solid 3px #8cff66;"><br>
                                     <?php
                                 } else {
                                     ?>
