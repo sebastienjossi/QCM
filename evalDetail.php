@@ -54,7 +54,8 @@ Missing :
 
                         foreach(EvaluationDao::GetEvaluationUser($idEvaluation) as $idUser){
                             $qcmId = EvaluationDao::GetQcmByEvaluation($idEvaluation)[0]['id_qcm'];
-                            $toDisplay .= "<a href='evalResult.php?idQcm=" . $qcmId . "&idUser=". $idUser[0] . "' class='block'>" . UserDao::GetUserById($idUser[0])[0]['name'] . "</a>";
+                            $user = UserDao::GetUserById($idUser[0])[0];
+                            $toDisplay .= "<a href='evalResult.php?idQcm=" . $qcmId . "&idUser=". $idUser[0] . "' class='block'>" . $user["first_name"] . " " . $user["name"] . "</a>";
                         }
 
                         echo $toDisplay;

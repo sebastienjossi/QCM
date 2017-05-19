@@ -46,7 +46,7 @@ Missing : For now, the idUser is written directly, but it should take the one of
                 <div class="col-lg-12 text-center">
                     <h2>Mes QCMs</h2>
                     <hr class="star-primary">
-                    <table class="table table-hover">
+                    <table class="table table-hover table-fixed">
                         <thead>
                             <th>Nom QCM</th>
                             <th>Date de création</th>

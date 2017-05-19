@@ -44,7 +44,6 @@ include_once("qcmDao.inc.php");
                         <?php
                         foreach (QcmDao::GetAnswersByIdQuestion($question['id_question']) as $answer) {
 
-                            // REMPLACER LE 2 PAR LA VARIABLE DE SESSION DE L'ID USER
                             if(isset($_GET['idUser']))
                                 $ansU = UserDao::GetAnswerFromUserById($_GET['idUser'], $_GET['idQcm'], $question['id_question']);
                             else

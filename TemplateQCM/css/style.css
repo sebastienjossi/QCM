@@ -5,6 +5,12 @@ Goal : Override or complete some of the bootstrap theme
 Note : There should be a lot more authors than one in the end, when we merge every custom css file
 */
 
+.table-fixed tbody {
+  height: 160px;
+  overflow-y: auto;
+  width: 100%;
+}
+
 .block {
     display: block;
 }
@@ -28,8 +34,8 @@ td {
 }
 
 .table {
-    margin-top: 50px;
-    margin-bottom: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 #answerQCM
